@@ -1,0 +1,209 @@
+================================================================
+BRIEF — PÁGINA WEB BOLETUS.CL
+================================================================
+Ingeniero Agrónomo + Agroecología + Villa Alemana, V Región
+
+
+----------------------------------------------------------------
+1. RESUMEN EJECUTIVO
+----------------------------------------------------------------
+Empresa:        BOLETUS
+Dominio:        boletus.cl
+Ubicación:      Villa Alemana, V Región, Chile
+Servicios:      Jardinería, paisajismo, instalación de pasto,
+                 asesoría agroecológica
+Diferenciador:  Ingenieros agrónomos, enfoque agroecológico,
+                 plantas nativas, riego tecnificado
+Objetivo web:   Captar clientes, mostrar portafolio, generar
+                 consultas, convertir
+Presupuesto:    Básico (Wix o WordPress.com, ~$20.000/mes)
+Timeline:       Lanzamiento: Mayo 2026 (semana 1-2)
+
+
+----------------------------------------------------------------
+2. OBJETIVOS DE LA WEB
+----------------------------------------------------------------
+- Primario:     Convertir visitantes en clientes (formulario de
+                 contacto + WhatsApp)
+- Secundario:   Posicionar como expertos en agroecología y
+                 plantas nativas
+- Terciario:    Generar confianza con portafolio visual
+                 (ANTES/DESPUÉS)
+- Cuaternario:  Mejorar SEO local para palabras clave de V Región
+
+Meta 2026: 100-150 visitas mensuales en junio → 5-10 consultas
+mensuales
+
+
+----------------------------------------------------------------
+3. PÚBLICO OBJETIVO
+----------------------------------------------------------------
+
+A) Homeowners (Propietarios de vivienda)
+   - Edad:        30-55 años
+   - Ubicación:   Villa Alemana, Quilpué, Viña del Mar, V Región
+   - Ingresos:    Clase media-alta
+   - Necesidad:   Renovar jardín, instalar pasto, proyectos
+                   paisajismo
+   - Motivación:  Estética + valor de la propiedad +
+                   sostenibilidad
+
+B) Condominios / Comunidades
+   - Edad:        Administradores de cualquier edad
+   - Ubicación:   V Región
+   - Ingresos:    Presupuesto comunitario
+   - Necesidad:   Mantención áreas verdes, mejoras comunes
+   - Motivación:  Calidad + bajo costo + mantenimiento recurrente
+
+C) Emprendedores ecológicos
+   - Edad:        25-45 años
+   - Ubicación:   V Región (online también)
+   - Ingresos:    Presupuesto flexible
+   - Necesidad:   Proyectos especiales (huertas, paisajismo
+                   agroecológico)
+   - Motivación:  Sostenibilidad + innovación + diferenciador
+
+
+----------------------------------------------------------------
+4. ESTRUCTURA DE CONTENIDO
+----------------------------------------------------------------
+
+PÁGINA: HOME
+  - Hero image: proyecto ejecutado (impactante)
+  - Tagline: "Jardinería Agroecológica Profesional"
+  - CTA principal: "Cotiza tu proyecto" (botón WhatsApp)
+  - 3 servicios principales con iconos
+  - Galería de antes/después (3-4 proyectos)
+  - Testimonial de cliente
+  - Footer con contacto
+
+PÁGINA: SERVICIOS
+  - Instalación de pasto (descripción + precio orientativo)
+  - Paisajismo y diseño (descripción + galería)
+  - Huertas agroecológicas (descripción + beneficios)
+  - Mantención recurrente (descripción + planes)
+  - Poda especializada (descripción)
+  - Asesoría técnica (descripción)
+
+PÁGINA: PORTAFOLIO / GALERÍA
+  - Fotos ANTES/DESPUÉS de los 4 proyectos
+  - Mínimo 12 imágenes de calidad
+  - Categorías: Pasto | Paisajismo | Huertas | Poda
+  - Filtro visual por tipo de proyecto
+
+PÁGINA: NOSOTROS
+  - Foto de Mauricio y Benjamín en terreno
+  - Formación profesional (Ing. Agrónomos)
+  - Experiencia y certificaciones
+  - Filosofía agroecológica (2-3 párrafos)
+  - ¿Por qué elegirnos?
+
+PÁGINA: CONTACTO
+  - Formulario simple (Nombre | Teléfono | Servicio | Mensaje)
+  - Botón WhatsApp flotante (verde, siempre visible)
+  - Teléfono directo
+  - Email
+  - Ubicación (mapa)
+  - Horarios
+
+
+----------------------------------------------------------------
+5. TONO Y VOZ
+----------------------------------------------------------------
+
+- Profesional
+  Somos expertos. Ingenieros agrónomos con formación real.
+  Ej: "Diseñamos espacios verdes con metodología agroecológica
+  comprobada"
+
+- Accesible
+  Sin jerga técnica innecesaria. Explicamos beneficios, no
+  procesos.
+  Ej: "Tu pasto durará más tiempo porque preparamos el suelo
+  correctamente"
+
+- Sostenible
+  Resaltamos el diferenciador: agroecología, plantas nativas,
+  cuidado.
+  Ej: "Usamos plantas nativas porque resisten mejor el clima
+  local"
+
+- Cercano
+  Somos locales. Villa Alemana, V Región. Entendemos el
+  contexto.
+  Ej: "Conocemos el clima de la V Región. Por eso elegimos
+  estas plantas."
+
+Evitar: Sobreventa, mentiras de marketing, jerga técnica, fotos
+genéricas.
+
+
+----------------------------------------------------------------
+6. FUNCIONALIDADES CLAVE
+----------------------------------------------------------------
+
+[CRÍTICA] WhatsApp Flotante
+  Botón verde, siempre visible, redirige a WhatsApp de Mauricio
+
+[CRÍTICA] Formulario de Contacto
+  Campos: Nombre | Teléfono | Servicio | Mensaje | Enviar
+  (conectar a email)
+
+[ALTA] Galería de Fotos
+  Lightbox o slider, antes/después, filtrable por categoría
+
+[ALTA] Google Maps
+  Ubicación en contacto/footer (Villa Alemana)
+
+[CRÍTICA] Responsive Design
+  Mobile-first (80% del tráfico será mobile)
+
+[MEDIA] Google Analytics
+  Trackear visitas, fuente, comportamiento
+
+[ALTA] Meta Pixel (Facebook)
+  Pixel para retargeting en Ads
+
+
+----------------------------------------------------------------
+7. DISEÑO VISUAL
+----------------------------------------------------------------
+
+PALETA DE COLORES
+  - Verde Principal:  #1a5a4a (oscuro, profesional)
+  - Verde Claro:      #6bcf9f (acentos, CTAs)
+  - Blanco/Crema:     #e8f0e0 (fondo, texto principal)
+  - Gris Oscuro:      #5a7a5a (textos secundarios)
+
+TIPOGRAFÍA
+  - Encabezados:  Trebuchet MS o similar (web-safe)
+  - Cuerpo:       Georgia (legible)
+  - Tamaños:      H1: 36px | H2: 24px | Cuerpo: 14px |
+                   Pequeño: 12px
+
+FOTOGRAFÍA
+  - Estilo:       Fotos reales de proyectos (nada de stock)
+  - Composición:  ANTES/DESPUÉS, procesos, detalles
+  - Calidad:      Alta resolución (comprimir con TinyPNG)
+
+ICONOGRAFÍA
+  - Estilo:  Simple, minimalista, verdes
+  - Uso:     Servicios, características, beneficios
+  - Fuente:  FontAwesome o similares (gratis)
+
+Principios: Limpio, profesional, natural. Menos es más. Enfoque
+en contenido visual (fotos de proyectos).
+
+
+----------------------------------------------------------------
+NOTAS FINALES
+----------------------------------------------------------------
+Plataforma recomendada: Wix.com o WordPress.com (templates
+profesionales listos, dominio incluido, no requiere
+codificación)
+
+Tiempo de armado: 3-5 días (estructura + contenido)
+
+Responsable: Benjamín (setup inicial)
+
+================================================================
