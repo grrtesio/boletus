@@ -1207,7 +1207,9 @@ function AdminClients() {
 // ─── Root App ─────────────────────────────────────────────────────────────────
 
 export default function App() {
-  const [mode, setMode] = useState<AppMode>("admin");
+  // Arranca en el SITIO PÚBLICO (comercial). El Dashboard/admin se entra por el
+  // acceso discreto "Admin" del footer (provisional; luego tendrá su ruta real).
+  const [mode, setMode] = useState<AppMode>("public");
   const [publicPage, setPublicPage] = useState<PublicPage>("home");
   const [adminPage, setAdminPage] = useState<AdminPage>("dashboard");
 
