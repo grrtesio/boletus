@@ -421,7 +421,7 @@ function ServicesPage({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
       desc: "Preparamos y nivelamos el suelo, seleccionamos la variedad de césped más adecuada para tu microclima en la V Región e instalamos sistemas de riego para garantizar un resultado duradero.",
       price: "Desde $35.000/m²",
       includes: ["Análisis de suelo", "Nivelación y preparación", "Siembra o tapizado", "Sistema de riego básico"],
-      img: "https://images.unsplash.com/photo-1585320806297-9794b3e4aaae?w=600&h=380&fit=crop&auto=format",
+      img: "/instalacion-pasto.jpg",
     },
     {
       icon: Leaf,
