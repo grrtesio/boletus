@@ -124,12 +124,7 @@ function Navbar({
     <header className="fixed top-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-sm border-b border-border">
       <nav className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         <button onClick={() => onNavigate("home")} className="flex items-center gap-2 group">
-          <div className="w-8 h-8 bg-primary rounded-sm flex items-center justify-center">
-            <Leaf className="w-4 h-4 text-primary-foreground" />
-          </div>
-          <span style={{ fontFamily: "'Playfair Display', serif" }} className="text-lg font-semibold text-foreground tracking-wide">
-            BOLETUS
-          </span>
+          <img src="/logo-boletus.svg" alt="Boletus" className="h-10 w-auto" />
         </button>
 
         <ul className="hidden md:flex items-center gap-6">
@@ -872,10 +867,7 @@ function Footer({ onNavigate, onAdminClick }: { onNavigate: (p: PublicPage) => v
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 grid sm:grid-cols-3 gap-8">
         <div>
           <div className="flex items-center gap-2 mb-4">
-            <div className="w-7 h-7 bg-accent rounded-sm flex items-center justify-center">
-              <Leaf className="w-3.5 h-3.5 text-accent-foreground" />
-            </div>
-            <span style={{ fontFamily: "'Playfair Display', serif" }} className="text-white font-semibold">BOLETUS</span>
+            <img src="/logo-boletus-dark.svg" alt="Boletus" className="h-12 w-auto" />
           </div>
           <p className="text-xs leading-relaxed">
             Jardinería agroecológica profesional en Villa Alemana y V Región. Ingenieros agrónomos comprometidos con el paisajismo sostenible.
