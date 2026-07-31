@@ -88,7 +88,7 @@ function Badge({ status }: { status: OrderStatus }) {
 function WhatsAppFloat() {
   return (
     <a
-      href="https://wa.me/56912345678?text=Hola%20BOLETUS%2C%20quisiera%20cotizar%20un%20proyecto"
+      href="https://wa.me/56950081548?text=Hola%20BOLETUS%2C%20quisiera%20cotizar%20un%20proyecto"
       target="_blank"
       rel="noopener noreferrer"
       className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-[#25d366] text-white rounded-full shadow-2xl px-4 py-3 hover:bg-[#1ebe5d] transition-all duration-300 hover:scale-105 group"
@@ -226,7 +226,7 @@ function HomePage({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
           </p>
           <div className="flex flex-col sm:flex-row gap-3">
             <a
-              href="https://wa.me/56912345678?text=Hola%20BOLETUS%2C%20quisiera%20cotizar"
+              href="https://wa.me/56950081548?text=Hola%20BOLETUS%2C%20quisiera%20cotizar"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 bg-accent text-accent-foreground px-6 py-3 font-semibold hover:bg-accent/90 transition-colors rounded-sm text-sm"
@@ -358,7 +358,7 @@ function HomePage({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
             <p className="text-primary-foreground/70 text-sm">Cotización sin compromiso · Respuesta en menos de 24 horas</p>
           </div>
           <a
-            href="https://wa.me/56912345678?text=Hola%20BOLETUS%2C%20quiero%20una%20cotización"
+            href="https://wa.me/56950081548?text=Hola%20BOLETUS%2C%20quiero%20una%20cotización"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-accent text-accent-foreground px-6 py-3 font-semibold hover:bg-accent/90 transition-colors rounded-sm text-sm whitespace-nowrap"
@@ -774,7 +774,7 @@ function ContactPage() {
                   type="tel"
                   value={form.telefono}
                   onChange={(e) => setForm({ ...form, telefono: e.target.value })}
-                  placeholder="+56 9 1234 5678"
+                  placeholder="+56 9 5008 1548"
                   className="w-full bg-input-background border border-border px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors rounded-sm"
                 />
               </div>
@@ -821,7 +821,7 @@ function ContactPage() {
             </h2>
             <div className="space-y-4">
               {[
-                { icon: Phone, label: "+56 9 1234 5678", sub: "Mauricio (directo)" },
+                { icon: Phone, label: "+56 9 5008 1548", sub: "Mauricio (directo)" },
                 { icon: Mail, label: "contacto@boletus.cl", sub: "Respuesta en 24 hrs" },
                 { icon: MapPin, label: "Villa Alemana, V Región", sub: "Servicio toda la región" },
                 { icon: Clock, label: "Lunes a Viernes · 8:00–18:00", sub: "Sábados hasta las 13:00" },
@@ -842,7 +842,7 @@ function ContactPage() {
           <div className="border border-border bg-card p-5">
             <p className="text-xs font-medium text-foreground mb-3">O escríbenos directo por WhatsApp</p>
             <a
-              href="https://wa.me/56912345678?text=Hola%20BOLETUS%2C%20quisiera%20cotizar%20un%20proyecto"
+              href="https://wa.me/56950081548?text=Hola%20BOLETUS%2C%20quisiera%20cotizar%20un%20proyecto"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 bg-[#25d366] text-white py-3 text-sm font-semibold rounded-sm hover:bg-[#1ebe5d] transition-colors"
@@ -894,7 +894,7 @@ function Footer({ onNavigate, onAdminClick }: { onNavigate: (p: PublicPage) => v
         <div>
           <h3 className="text-white text-xs font-semibold uppercase tracking-wider mb-4">Contacto</h3>
           <ul className="space-y-2 text-xs">
-            <li>+56 9 1234 5678</li>
+            <li>+56 9 5008 1548</li>
             <li>contacto@boletus.cl</li>
             <li>Villa Alemana, V Región</li>
           </ul>
