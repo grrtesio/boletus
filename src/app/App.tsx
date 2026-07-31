@@ -702,11 +702,29 @@ function AboutPage({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
 function ContactPage() {
   const [form, setForm] = useState({ nombre: "", telefono: "", servicio: "", mensaje: "" });
   const [sent, setSent] = useState(false);
+  const [enviando, setEnviando] = useState(false);
+  const [errorEnvio, setErrorEnvio] = useState("");
   const servicios = ["Instalación de Pasto", "Paisajismo y Diseño", "Huertas Agroecológicas", "Poda Especializada", "Mantención Recurrente", "Asesoría Técnica"];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSent(true);
+    setEnviando(true);
+    setErrorEnvio("");
+    try {
+      const r = await fetch("/api/contacto", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || "error");
+      setForm({ nombre: "", telefono: "", servicio: "", mensaje: "" });
+      setSent(true);
+    } catch {
+      setErrorEnvio("No pudimos enviar tu consulta. Intenta de nuevo o escríbenos por WhatsApp.");
+    } finally {
+      setEnviando(false);
+    }
   };
 
   return (
@@ -782,11 +800,15 @@ function ContactPage() {
                   className="w-full bg-input-background border border-border px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors rounded-sm resize-none"
                 />
               </div>
+              {errorEnvio && (
+                <p className="text-sm text-red-600">{errorEnvio}</p>
+              )}
               <button
                 type="submit"
-                className="w-full bg-primary text-primary-foreground py-3 font-semibold text-sm hover:bg-primary/90 transition-colors rounded-sm"
+                disabled={enviando}
+                className="w-full bg-primary text-primary-foreground py-3 font-semibold text-sm hover:bg-primary/90 transition-colors rounded-sm disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                Enviar consulta
+                {enviando ? "Enviando…" : "Enviar consulta"}
               </button>
             </form>
           )}
