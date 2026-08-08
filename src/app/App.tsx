@@ -8,6 +8,16 @@ import {
 } from "lucide-react";
 
 type PublicPage = "home" | "servicios" | "portafolio" | "nosotros" | "contacto";
+
+// El sitio es una SPA con estado en memoria; sin sincronizar con la History
+// API, el botón "atrás" del navegador salta a la página anterior a boletus.cl
+// (o queda en blanco). Estas dos funciones son la traducción página↔URL.
+const RUTAS: Record<PublicPage, string> = { home: "/", servicios: "/servicios", portafolio: "/portafolio", nosotros: "/nosotros", contacto: "/contacto" };
+function pathAPagina(path: string): PublicPage {
+  const p = (path || "/").toLowerCase();
+  const entry = (Object.entries(RUTAS) as [PublicPage, string][]).find(([, ruta]) => ruta === p);
+  return entry ? entry[0] : "home";
+}
 type AdminPage = "dashboard" | "pedidos" | "clientes";
 type AppMode = "public" | "admin";
 type OrderStatus = "pendiente" | "en_proceso" | "completado" | "cancelado";
@@ -1223,10 +1233,30 @@ export default function App() {
     if (typeof window === "undefined") return "public";
     return new URLSearchParams(window.location.search).get("admin") === "1" ? "admin" : "public";
   });
-  const [publicPage, setPublicPage] = useState<PublicPage>("home");
+  // La página inicial sale del pathname: /servicios → servicios, / → home, etc.
+  // Así, links directos y refresh en cualquier ruta abren la sección correcta.
+  const [publicPage, setPublicPage] = useState<PublicPage>(() => {
+    if (typeof window === "undefined") return "home";
+    return pathAPagina(window.location.pathname);
+  });
   const [adminPage, setAdminPage] = useState<AdminPage>("dashboard");
 
+  // Sincroniza el back/forward del navegador con el estado de la SPA. Sin esto,
+  // el usuario entra a "servicios", aprieta atrás, y salía del sitio (o queda
+  // en blanco) porque nunca empujamos entradas al history.
+  useEffect(() => {
+    const onPop = (e: PopStateEvent) => {
+      const st = e.state as { pagina?: PublicPage } | null;
+      setPublicPage(st?.pagina ?? pathAPagina(window.location.pathname));
+    };
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, []);
+
   const navigatePublic = (p: PublicPage) => {
+    if (p !== publicPage) {
+      window.history.pushState({ pagina: p }, "", RUTAS[p]);
+    }
     setPublicPage(p);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
