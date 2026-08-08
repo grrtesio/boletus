@@ -105,11 +105,9 @@ function WhatsAppFloat() {
 function Navbar({
   currentPage,
   onNavigate,
-  onAdminClick,
 }: {
   currentPage: PublicPage;
   onNavigate: (p: PublicPage) => void;
-  onAdminClick: () => void;
 }) {
   const [open, setOpen] = useState(false);
   const links: { id: PublicPage; label: string }[] = [
@@ -861,7 +859,7 @@ function ContactPage() {
 
 // ─── Footer ───────────────────────────────────────────────────────────────────
 
-function Footer({ onNavigate, onAdminClick }: { onNavigate: (p: PublicPage) => void; onAdminClick: () => void }) {
+function Footer({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
   return (
     <footer className="bg-foreground text-white/70">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 grid sm:grid-cols-3 gap-8">
@@ -892,11 +890,8 @@ function Footer({ onNavigate, onAdminClick }: { onNavigate: (p: PublicPage) => v
           </ul>
         </div>
       </div>
-      <div className="border-t border-white/10 px-4 sm:px-6 py-4 max-w-6xl mx-auto flex justify-between items-center">
+      <div className="border-t border-white/10 px-4 sm:px-6 py-4 max-w-6xl mx-auto">
         <p className="text-xs">© 2026 BOLETUS. Todos los derechos reservados.</p>
-        <button onClick={onAdminClick} className="text-xs text-white/30 hover:text-white/60 transition-colors">
-          Admin
-        </button>
       </div>
     </footer>
   );
@@ -1221,9 +1216,13 @@ function AdminClients() {
 // ─── Root App ─────────────────────────────────────────────────────────────────
 
 export default function App() {
-  // Arranca en el SITIO PÚBLICO (comercial). El Dashboard/admin se entra por el
-  // acceso discreto "Admin" del footer (provisional; luego tendrá su ruta real).
-  const [mode, setMode] = useState<AppMode>("public");
+  // Arranca en el SITIO PÚBLICO (comercial). Hasta que el admin tenga ruta y
+  // login propios, se entra sin UI visible usando `?admin=1` en la URL. El
+  // botón "Admin" del footer se quitó para que no lo vea cualquier visitante.
+  const [mode, setMode] = useState<AppMode>(() => {
+    if (typeof window === "undefined") return "public";
+    return new URLSearchParams(window.location.search).get("admin") === "1" ? "admin" : "public";
+  });
   const [publicPage, setPublicPage] = useState<PublicPage>("home");
   const [adminPage, setAdminPage] = useState<AdminPage>("dashboard");
 
@@ -1254,7 +1253,6 @@ export default function App() {
       <Navbar
         currentPage={publicPage}
         onNavigate={navigatePublic}
-        onAdminClick={() => setMode("admin")}
       />
       <main>
         {publicPage === "home" && <HomePage onNavigate={navigatePublic} />}
@@ -1263,7 +1261,7 @@ export default function App() {
         {publicPage === "nosotros" && <AboutPage onNavigate={navigatePublic} />}
         {publicPage === "contacto" && <ContactPage />}
       </main>
-      <Footer onNavigate={navigatePublic} onAdminClick={() => setMode("admin")} />
+      <Footer onNavigate={navigatePublic} />
       <WhatsAppFloat />
     </div>
   );
