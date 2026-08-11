@@ -419,14 +419,6 @@ function BeforeAfterCard({ item }: { item: typeof PORTFOLIO_ITEMS[0] }) {
 function ServicesPage({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
   const services = [
     {
-      icon: Sprout,
-      title: "Instalación de Pasto",
-      desc: "Preparamos y nivelamos el suelo, seleccionamos la variedad de césped más adecuada para tu microclima en la V Región e instalamos sistemas de riego para garantizar un resultado duradero.",
-      price: "Desde $35.000/m²",
-      includes: ["Análisis de suelo", "Nivelación y preparación", "Siembra o tapizado", "Sistema de riego básico"],
-      img: "/instalacion-pasto.jpg",
-    },
-    {
       icon: Leaf,
       title: "Paisajismo y Diseño",
       desc: "Diseñamos espacios verdes con metodología agroecológica comprobada. Priorizamos plantas nativas del litoral central que toleran la sequía y aportan biodiversidad local.",
@@ -449,6 +441,14 @@ function ServicesPage({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
       price: "Desde $15.000/árbol",
       includes: ["Diagnóstico fitosanitario", "Poda técnica especializada", "Retiro de material", "Recomendaciones de seguimiento"],
       img: "https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=600&h=380&fit=crop&auto=format",
+    },
+    {
+      icon: Sprout,
+      title: "Instalación de Pasto",
+      desc: "Preparamos y nivelamos el suelo, seleccionamos la variedad de césped más adecuada para tu microclima en la V Región e instalamos sistemas de riego para garantizar un resultado duradero.",
+      price: "Desde $35.000/m²",
+      includes: ["Análisis de suelo", "Nivelación y preparación", "Siembra o tapizado", "Sistema de riego básico"],
+      img: "/instalacion-pasto.jpg",
     },
     {
       icon: Droplets,
@@ -707,7 +707,7 @@ function ContactPage() {
   const [sent, setSent] = useState(false);
   const [enviando, setEnviando] = useState(false);
   const [errorEnvio, setErrorEnvio] = useState("");
-  const servicios = ["Instalación de Pasto", "Paisajismo y Diseño", "Huertas Agroecológicas", "Poda Especializada", "Mantención Recurrente", "Asesoría Técnica"];
+  const servicios = ["Paisajismo y Diseño", "Huertas Agroecológicas", "Poda Especializada", "Instalación de Pasto", "Mantención Recurrente", "Asesoría Técnica"];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -884,7 +884,7 @@ function Footer({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
         <div>
           <h3 className="text-white text-xs font-semibold uppercase tracking-wider mb-4">Servicios</h3>
           <ul className="space-y-2">
-            {["Instalación de Pasto", "Paisajismo y Diseño", "Huertas Agroecológicas", "Mantención Recurrente", "Poda Especializada"].map((s) => (
+            {["Paisajismo y Diseño", "Huertas Agroecológicas", "Poda Especializada", "Instalación de Pasto", "Mantención Recurrente"].map((s) => (
               <li key={s}>
                 <button onClick={() => onNavigate("servicios")} className="text-xs hover:text-white transition-colors">{s}</button>
               </li>
