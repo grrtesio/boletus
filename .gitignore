@@ -5,3 +5,9 @@ dist
 .vercel
 *.log
 .DS_Store
+
+# Este repo usa pnpm. Un package-lock.json aparece solo si alguien corre
+# `npm install` por error, y conviviendo con pnpm-lock.yaml deja instaladas
+# versiones distintas de las mismas dependencias.
+package-lock.json
+yarn.lock
