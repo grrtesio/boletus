@@ -7,12 +7,12 @@ import {
   ChevronRight, Trash2, ShieldCheck
 } from "lucide-react";
 
-type PublicPage = "home" | "servicios" | "portafolio" | "nosotros" | "contacto";
+type PublicPage = "home" | "servicios" | "productos" | "portafolio" | "nosotros" | "contacto";
 
 // El sitio es una SPA con estado en memoria; sin sincronizar con la History
 // API, el botón "atrás" del navegador salta a la página anterior a boletus.cl
 // (o queda en blanco). Estas dos funciones son la traducción página↔URL.
-const RUTAS: Record<PublicPage, string> = { home: "/", servicios: "/servicios", portafolio: "/portafolio", nosotros: "/nosotros", contacto: "/contacto" };
+const RUTAS: Record<PublicPage, string> = { home: "/", servicios: "/servicios", productos: "/productos", portafolio: "/portafolio", nosotros: "/nosotros", contacto: "/contacto" };
 function pathAPagina(path: string): PublicPage {
   const p = (path || "/").toLowerCase();
   const entry = (Object.entries(RUTAS) as [PublicPage, string][]).find(([, ruta]) => ruta === p);
@@ -123,6 +123,7 @@ function Navbar({
   const links: { id: PublicPage; label: string }[] = [
     { id: "home", label: "Inicio" },
     { id: "servicios", label: "Servicios" },
+    { id: "productos", label: "Productos" },
     { id: "portafolio", label: "Portafolio" },
     { id: "nosotros", label: "Nosotros" },
     { id: "contacto", label: "Contacto" },
@@ -505,6 +506,112 @@ function ServicesPage({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
               </ul>
               <div className="flex items-center justify-between pt-4 border-t border-border">
                 <span className="text-xs font-medium text-muted-foreground" style={{ fontFamily: "'DM Mono', monospace" }}>{s.price}</span>
+                <button
+                  onClick={() => onNavigate("contacto")}
+                  className="text-xs font-semibold text-primary flex items-center gap-1 hover:gap-2 transition-all"
+                >
+                  Solicitar cotización <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ─── Products Page ────────────────────────────────────────────────────────────
+
+/**
+ * Productos: lo que Boletus VENDE, a diferencia de Servicios, que es lo que HACE.
+ *
+ * Comparte la misma maqueta que ServicesPage —tarjetas alternadas, foto a un
+ * lado, texto al otro— a propósito: son dos caras del mismo negocio y deben
+ * leerse como hermanas, no como dos sitios distintos.
+ *
+ * PENDIENTE: las fotos y los precios son provisionales. Las imágenes apuntan a
+ * Unsplash para poder ver la maqueta; las definitivas van en `public/productos/`
+ * y basta cambiar el campo `img` de cada uno. Los precios dicen «Consultar»
+ * hasta que Gonzalo confirme las cifras — inventar un precio en un sitio
+ * comercial es peor que no ponerlo.
+ */
+function ProductsPage({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
+  const products = [
+    {
+      icon: Package,
+      title: "Cajón Pequeño",
+      desc: "El formato de entrada para partir con una huerta en casa. Ideal para terrazas, patios chicos o para probar antes de comprometerse con algo mayor. Madera tratada y medidas pensadas para llegar cómodo al centro sin pisar la tierra.",
+      price: "Consultar precio",
+      includes: ["Madera tratada para exterior", "Armado incluido", "Listo para llenar con sustrato", "Medida compacta para terraza"],
+      img: "https://images.unsplash.com/photo-1591857177580-dc82b9ac4e1e?w=600&h=380&fit=crop&auto=format",
+    },
+    {
+      icon: Sprout,
+      title: "Bancal",
+      desc: "Nuestro formato clásico de huerta elevada. Da espacio suficiente para una rotación real de hortalizas y mantiene la tierra separada del suelo, lo que mejora el drenaje y facilita el control de malezas.",
+      price: "Consultar precio",
+      includes: ["Estructura de madera tratada", "Profundidad para raíz media", "Armado incluido", "Asesoría de qué plantar"],
+      img: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=600&h=380&fit=crop&auto=format",
+    },
+    {
+      icon: Leaf,
+      title: "Bancal Profundo",
+      desc: "Mayor profundidad de sustrato para cultivos de raíz larga —zanahoria, betarraga, papa— y para que la tierra retenga humedad por más tiempo. Se puede llevar armado o con instalación completa en terreno.",
+      price: "Consultar precio · con o sin instalación",
+      includes: ["Profundidad extra para raíz larga", "Opción con instalación en terreno", "Mejor retención de humedad", "Estructura reforzada"],
+      img: "https://images.unsplash.com/photo-1416331108676-a22ccb276e35?w=600&h=380&fit=crop&auto=format",
+    },
+    {
+      icon: Sun,
+      title: "Bancal en Altura",
+      desc: "Elevado a la altura de la cintura, para trabajar de pie y sin agacharse. Pensado para adultos mayores, personas con movilidad reducida o para quien simplemente quiere cuidar la espalda mientras cultiva.",
+      price: "Consultar precio",
+      includes: ["Altura de trabajo de pie", "Accesible en silla de ruedas", "Base y patas reforzadas", "Armado e instalación"],
+      img: "https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?w=600&h=380&fit=crop&auto=format",
+    },
+  ];
+
+  return (
+    <div className="pt-16">
+      <div className="bg-primary py-16 px-4 sm:px-6">
+        <div className="max-w-6xl mx-auto">
+          <p className="text-accent text-xs font-medium tracking-[0.2em] uppercase mb-4" style={{ fontFamily: "'DM Mono', monospace" }}>
+            Lo que vendemos
+          </p>
+          <h1 style={{ fontFamily: "'Playfair Display', serif" }} className="text-3xl md:text-5xl font-bold text-primary-foreground max-w-xl leading-tight">
+            Bancales y Cajones para tu Huerta
+          </h1>
+          <p className="text-primary-foreground/70 mt-4 max-w-xl text-sm">
+            Fabricados por nosotros en Villa Alemana, con madera tratada para exterior y medidas pensadas para que cultivar sea cómodo.
+          </p>
+        </div>
+      </div>
+
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-16 grid gap-8">
+        {products.map((p, i) => (
+          <div key={p.title} className={`grid md:grid-cols-2 gap-0 border border-border overflow-hidden bg-card ${i % 2 === 1 ? "md:[&>*:first-child]:order-last" : ""}`}>
+            <div className="h-56 md:h-auto bg-muted overflow-hidden">
+              <img src={p.img} alt={p.title} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+            </div>
+            <div className="p-8 flex flex-col justify-center">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-9 h-9 bg-secondary flex items-center justify-center rounded-sm">
+                  <p.icon className="w-4 h-4 text-primary" />
+                </div>
+                <h2 style={{ fontFamily: "'Playfair Display', serif" }} className="text-xl font-semibold text-foreground">{p.title}</h2>
+              </div>
+              <p className="text-muted-foreground text-sm leading-relaxed mb-5">{p.desc}</p>
+              <ul className="space-y-1.5 mb-6">
+                {p.includes.map((inc) => (
+                  <li key={inc} className="flex items-center gap-2 text-xs text-foreground">
+                    <CheckCircle className="w-3.5 h-3.5 text-accent flex-shrink-0" />
+                    {inc}
+                  </li>
+                ))}
+              </ul>
+              <div className="flex items-center justify-between pt-4 border-t border-border">
+                <span className="text-xs font-medium text-muted-foreground" style={{ fontFamily: "'DM Mono', monospace" }}>{p.price}</span>
                 <button
                   onClick={() => onNavigate("contacto")}
                   className="text-xs font-semibold text-primary flex items-center gap-1 hover:gap-2 transition-all"
@@ -1287,6 +1394,7 @@ export default function App() {
       <main>
         {publicPage === "home" && <HomePage onNavigate={navigatePublic} />}
         {publicPage === "servicios" && <ServicesPage onNavigate={navigatePublic} />}
+        {publicPage === "productos" && <ProductsPage onNavigate={navigatePublic} />}
         {publicPage === "portafolio" && <PortfolioPage />}
         {publicPage === "nosotros" && <AboutPage onNavigate={navigatePublic} />}
         {publicPage === "contacto" && <ContactPage />}
