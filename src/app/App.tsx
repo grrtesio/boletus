@@ -197,10 +197,14 @@ function Navbar({
 // ─── Home Page ─────────────────────────────────────────────────────────────────
 
 function HomePage({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
+  // Los tres de la portada tienen que existir en la página de Servicios y
+  // llamarse igual: antes acá aparecía «Riego Tecnificado», que no es un
+  // servicio del sitio, y «Paisajismo Agroecológico», que allá se llama
+  // «Paisajismo y Diseño». Van en el mismo orden que la página de Servicios.
   const services = [
+    { icon: Leaf, title: "Paisajismo y Diseño", desc: "Diseñamos con plantas nativas que resisten el clima local y requieren menos agua." },
+    { icon: Sun, title: "Huertas Agroecológicas", desc: "Huertas productivas en espacios chicos o grandes, con compostaje y riego eficiente." },
     { icon: Sprout, title: "Instalación de Pasto", desc: "Preparamos el suelo correctamente para que tu pasto dure años, no meses." },
-    { icon: Leaf, title: "Paisajismo Agroecológico", desc: "Diseñamos con plantas nativas que resisten el clima local y requieren menos agua." },
-    { icon: Droplets, title: "Riego Tecnificado", desc: "Sistemas de riego por goteo que ahorran hasta 60% de agua comparado al riego manual." },
   ];
 
   return (
