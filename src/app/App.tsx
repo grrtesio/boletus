@@ -430,7 +430,7 @@ function ServicesPage({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
     {
       icon: Sun,
       title: "Huertas Agroecológicas",
-      desc: "Implementamos huertas productivas en espacios pequeños o grandes, con técnicas de compostaje, biodiversidad funcional y riego eficiente para familias y emprendimientos.",
+      desc: "Implementamos huertas productivas en espacios pequeños o grandes, con técnicas de compostaje, biodiversidad funcional y riego eficiente para familias y empresas.",
       price: "Desde $180.000",
       includes: ["Diseño de la huerta", "Compostaje inicial", "Plantines de temporada", "Capacitación de uso"],
       img: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=600&h=380&fit=crop&auto=format",
