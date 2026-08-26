@@ -64,10 +64,12 @@ const CLIENTS: Client[] = [
 ];
 
 const PORTFOLIO_ITEMS = [
-  { id: 1, categoria: "pasto" as const, titulo: "Casa particular — Villa Alemana", before: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&h=480&fit=crop&auto=format", after: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=700&h=480&fit=crop&auto=format", desc: "Instalación de 120 m² de pasto bermuda, preparación de suelo y sistema de riego tecnificado." },
+  { id: 1, categoria: "pasto" as const, titulo: "Casa particular — Recreo", before: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&h=480&fit=crop&auto=format", after: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=700&h=480&fit=crop&auto=format", desc: "Instalación de 120 m² de pasto bermuda, preparación de suelo y sistema de riego tecnificado." },
   { id: 2, categoria: "paisajismo" as const, titulo: "Condominio Los Pinos — Quilpué", before: "https://images.unsplash.com/photo-1586348943529-beaae6c28db9?w=700&h=480&fit=crop&auto=format", after: "https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?w=700&h=480&fit=crop&auto=format", desc: "Diseño paisajístico de áreas comunes con plantas nativas de la V Región, senderos y luminarias." },
-  { id: 3, categoria: "huertas" as const, titulo: "Huerta familiar — Viña del Mar", before: "https://images.unsplash.com/photo-1416331108676-a22ccb276e35?w=700&h=480&fit=crop&auto=format", after: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=700&h=480&fit=crop&auto=format", desc: "Huerta agroecológica de 30 m² con sistema de compostaje, riego por goteo y plantas aromáticas." },
-  { id: 4, categoria: "poda" as const, titulo: "Parque privado — Villa Alemana", before: "https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=700&h=480&fit=crop&auto=format", after: "https://images.unsplash.com/photo-1585320806297-9794b3e4aaae?w=700&h=480&fit=crop&auto=format", desc: "Poda formativa y sanitaria de 18 árboles frutales y ornamentales con herramientas especializadas." },
+  // Huertas va como GALERÍA y no como antes/después: son bancales instalados y llenos,
+  // no la transformación de un terreno. Un "antes" acá no dice nada.
+  { id: 3, categoria: "huertas" as const, titulo: "Huerta familiar — Concón", fotos: ["/bancales-varios.jpg", "/bancal-pequeno.jpg", "/bancal-profundo.jpg"], desc: "Bancales de distintas profundidades instalados y llenos, con sustrato preparado por nosotros y acolchado de paja para conservar la humedad." },
+  { id: 4, categoria: "poda" as const, titulo: "Poda de cerco perimetral de parcela", before: "https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=700&h=480&fit=crop&auto=format", after: "https://images.unsplash.com/photo-1585320806297-9794b3e4aaae?w=700&h=480&fit=crop&auto=format", desc: "Poda de mantención del cerco perimetral: se rebaja la altura, se empareja la línea y se retira el material cortado." },
 ];
 
 const statusConfig: Record<OrderStatus, { label: string; color: string; dot: string }> = {
@@ -203,7 +205,7 @@ function HomePage({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
   // «Paisajismo y Diseño». Van en el mismo orden que la página de Servicios.
   const services = [
     { icon: Leaf, title: "Paisajismo y Diseño", desc: "Diseñamos con plantas nativas que resisten el clima local y requieren menos agua." },
-    { icon: Sun, title: "Huertas Agroecológicas", desc: "Huertas productivas en espacios chicos o grandes, con compostaje y riego eficiente." },
+    { icon: Sun, title: "Instalaciones Agroecológicas", desc: "Huertas productivas en espacios chicos o grandes, con compostaje y riego eficiente." },
     { icon: Sprout, title: "Instalación de Pasto", desc: "Preparamos el suelo correctamente para que tu pasto dure años, no meses." },
   ];
 
@@ -257,8 +259,8 @@ function HomePage({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
       <section className="bg-primary text-primary-foreground">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           {[
-            { num: "+80", label: "proyectos ejecutados" },
-            { num: "5+", label: "años de experiencia" },
+            { num: "+80", label: "proyectos diversos" },
+            { num: "2", label: "años de experiencia" },
             { num: "2", label: "ingenieros agrónomos" },
             { num: "100%", label: "enfoque agroecológico" },
           ].map((s) => (
@@ -344,13 +346,13 @@ function HomePage({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
             style={{ fontFamily: "'Playfair Display', serif" }}
             className="text-xl md:text-2xl text-foreground italic leading-relaxed mb-8"
           >
-            "Mauricio y Benjamín transformaron nuestro jardín en algo que nunca imaginé posible. No solo quedó precioso, sino que nos explicaron cada decisión. Realmente saben de lo que hablan."
+            "Trabajo con explicaciones de manejos de una forma clara, prolija y profesional, además, generan opciones en base a mis necesidades, gustos y espacio de jardines."
           </blockquote>
           <div className="flex items-center justify-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center font-semibold text-primary">MG</div>
+            <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center font-semibold text-primary">EA</div>
             <div className="text-left">
-              <div className="text-sm font-semibold text-foreground">María González</div>
-              <div className="text-xs text-muted-foreground">Villa Alemana, V Región</div>
+              <div className="text-sm font-semibold text-foreground">Eugenio Asenjo</div>
+              <div className="text-xs text-muted-foreground">Quilpué</div>
             </div>
           </div>
         </div>
@@ -382,18 +384,38 @@ function HomePage({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
 
 // ─── Before / After Card ──────────────────────────────────────────────────────
 
-function BeforeAfterCard({ item }: { item: typeof PORTFOLIO_ITEMS[0] }) {
+/**
+ * Tarjeta del portafolio. Dos modos, y el trabajo decide cuál:
+ *
+ *  · ANTES / DESPUÉS cuando lo que se muestra es una transformación —un pasto que no
+ *    existía, un cerco desbordado que se emparejó—. Ahí el "antes" es media historia.
+ *  · GALERÍA (`fotos`) cuando el trabajo es una instalación: bancales puestos y llenos.
+ *    Un "antes" de un patio vacío no dice nada, y forzarlo obliga a inventar una foto.
+ */
+function BeforeAfterCard({ item }: { item: typeof PORTFOLIO_ITEMS[number] }) {
   const [showAfter, setShowAfter] = useState(false);
+  const fotos = "fotos" in item ? (item.fotos as string[]) : null;
+  const [i, setI] = useState(0);
 
   return (
     <div className="group overflow-hidden border border-border bg-card">
       <div className="relative h-56 overflow-hidden bg-muted">
         <img
-          src={showAfter ? item.after : item.before}
-          alt={`${showAfter ? "Después" : "Antes"} — ${item.titulo}`}
+          src={fotos ? fotos[i] : showAfter ? item.after : item.before}
+          alt={fotos ? `${item.titulo} — foto ${i + 1}` : `${showAfter ? "Después" : "Antes"} — ${item.titulo}`}
           className="w-full h-full object-cover transition-opacity duration-500"
         />
         <div className="absolute top-3 left-3 flex gap-2">
+          {fotos ? fotos.map((_, n) => (
+            <button
+              key={n}
+              onClick={() => setI(n)}
+              aria-label={`Foto ${n + 1}`}
+              className={`w-6 h-6 text-xs font-medium rounded-sm transition-colors ${n === i ? "bg-accent text-accent-foreground" : "bg-black/40 text-white hover:bg-black/60"}`}
+            >
+              {n + 1}
+            </button>
+          )) : <>
           <button
             onClick={() => setShowAfter(false)}
             className={`px-2.5 py-1 text-xs font-medium rounded-sm transition-colors ${!showAfter ? "bg-foreground text-background" : "bg-black/40 text-white hover:bg-black/60"}`}
@@ -406,6 +428,7 @@ function BeforeAfterCard({ item }: { item: typeof PORTFOLIO_ITEMS[0] }) {
           >
             Después
           </button>
+          </>}
         </div>
         <span className="absolute top-3 right-3 bg-primary text-primary-foreground text-xs px-2 py-1 rounded-sm capitalize">
           {item.categoria}
@@ -428,29 +451,29 @@ function ServicesPage({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
       title: "Paisajismo y Diseño",
       desc: "Diseñamos espacios verdes con metodología agroecológica comprobada. Priorizamos plantas nativas del litoral central que toleran la sequía y aportan biodiversidad local.",
       price: "Presupuesto según proyecto",
-      includes: ["Diseño en plano 2D", "Selección de especies nativas", "Instalación y trasplante", "Informe de mantención"],
+      includes: ["Diseño en plano 2D", "Selección de especies", "Instalación y trasplante"],
       img: "https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?w=600&h=380&fit=crop&auto=format",
     },
     {
       icon: Sun,
-      title: "Huertas Agroecológicas",
-      desc: "Implementamos huertas productivas en espacios pequeños o grandes, con técnicas de compostaje, biodiversidad funcional y riego eficiente para familias y empresas.",
-      price: "Desde $180.000",
-      includes: ["Diseño de la huerta", "Compostaje inicial", "Plantines de temporada", "Capacitación de uso"],
+      title: "Instalaciones Agroecológicas",
+      desc: "Implementamos huertas productivas en espacios pequeños o grandes, con técnicas de compostaje, biodiversidad funcional y riego eficiente.",
+      price: "Presupuesto según proyecto",
+      includes: ["Diseño de la huerta", "Compostaje inicial", "Plantines de temporada", "Invernadero", "Capacitación de uso"],
       img: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=600&h=380&fit=crop&auto=format",
     },
     {
       icon: Scissors,
       title: "Poda Especializada",
       desc: "Realizamos podas formativas, sanitarias y de fructificación con criterio agronómico. Nuestro enfoque preserva la salud del árbol mientras mejora su forma y producción.",
-      price: "Desde $15.000/árbol",
+      price: "Desde $15.000/hora",
       includes: ["Diagnóstico fitosanitario", "Poda técnica especializada", "Retiro de material", "Recomendaciones de seguimiento"],
       img: "https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=600&h=380&fit=crop&auto=format",
     },
     {
       icon: Sprout,
       title: "Instalación de Pasto",
-      desc: "Preparamos y nivelamos el suelo, seleccionamos la variedad de césped más adecuada para tu microclima en la V Región e instalamos sistemas de riego para garantizar un resultado duradero.",
+      desc: "Preparamos y nivelamos el suelo, seleccionamos la variedad de césped más adecuada para tu microclima e instalamos sistemas de riego para garantizar un resultado duradero.",
       price: "Desde $35.000/m²",
       includes: ["Análisis de suelo", "Nivelación y preparación", "Siembra o tapizado", "Sistema de riego básico"],
       img: "/instalacion-pasto.jpg",
@@ -458,17 +481,17 @@ function ServicesPage({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
     {
       icon: Droplets,
       title: "Mantención Recurrente",
-      desc: "Planes mensuales o quincenales para condominios y particulares. Incluye corte de pasto, control de malezas, riego y revisión general de la salud del jardín.",
+      desc: "Planes mensuales o quincenales. Incluye corte de pasto, control de malezas, riego y revisión general de la salud del jardín.",
       price: "Planes desde $80.000/mes",
-      includes: ["Corte y bordes de pasto", "Control de malezas", "Revisión de riego", "Informe mensual de estado"],
+      includes: ["Corte y bordes de pasto", "Control de malezas", "Revisión de riego"],
       img: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&h=380&fit=crop&auto=format",
     },
     {
       icon: Award,
       title: "Asesoría Técnica",
-      desc: "Consultoría profesional para proyectos agroecológicos, certificaciones, diseño de espacios productivos o resolución de problemas fitosanitarios en jardines y huertos.",
+      desc: "Consultoría profesional para proyectos agroecológicos, diseño de espacios productivos o resolución de problemas fitosanitarios en jardines y huertos.",
       price: "Desde $60.000/hora",
-      includes: ["Diagnóstico en terreno", "Informe técnico escrito", "Plan de acción", "Seguimiento por correo"],
+      includes: ["Diagnóstico en terreno", "Informe técnico escrito", "Plan de acción", "Seguimiento"],
       img: "https://images.unsplash.com/photo-1591857177580-dc82b9ac4e1e?w=600&h=380&fit=crop&auto=format",
     },
   ];
@@ -548,23 +571,15 @@ function ProductsPage({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
       desc: "El formato de entrada para partir con una huerta en casa. Ideal para terrazas, patios chicos o para probar antes de comprometerse con algo mayor. Madera tratada y medidas pensadas para llegar cómodo al centro sin pisar la tierra.",
       price: "Consultar precio",
       includes: ["Madera tratada para exterior", "Armado incluido", "Listo para llenar con sustrato", "Medida compacta para terraza"],
-      img: "https://images.unsplash.com/photo-1591857177580-dc82b9ac4e1e?w=600&h=380&fit=crop&auto=format",
-    },
-    {
-      icon: Sprout,
-      title: "Bancal",
-      desc: "Nuestro formato clásico de huerta elevada. Da espacio suficiente para una rotación real de hortalizas y mantiene la tierra separada del suelo, lo que mejora el drenaje y facilita el control de malezas.",
-      price: "Consultar precio",
-      includes: ["Estructura de madera tratada", "Profundidad para raíz media", "Armado incluido", "Asesoría de qué plantar"],
-      img: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=600&h=380&fit=crop&auto=format",
+      img: "/bancal-pequeno.jpg",
     },
     {
       icon: Leaf,
       title: "Bancal Profundo",
-      desc: "Mayor profundidad de sustrato para cultivos de raíz larga —zanahoria, betarraga, papa— y para que la tierra retenga humedad por más tiempo. Se puede llevar armado o con instalación completa en terreno.",
+      desc: "El mismo bancal, con el doble de tierra. Esa profundidad es la que permite zanahoria, betarraga o papa —raíces que en un bancal bajo se topan con el fondo— y hace que el riego dure más, porque la humedad se guarda abajo en vez de evaporarse. Se puede llevar armado o con instalación completa en terreno.",
       price: "Consultar precio · con o sin instalación",
-      includes: ["Profundidad extra para raíz larga", "Opción con instalación en terreno", "Mejor retención de humedad", "Estructura reforzada"],
-      img: "https://images.unsplash.com/photo-1416331108676-a22ccb276e35?w=600&h=380&fit=crop&auto=format",
+      includes: ["Profundidad para raíz larga", "Opción con instalación en terreno", "Mejor retención de humedad", "Estructura reforzada"],
+      img: "/bancal-profundo.jpg",
     },
     {
       icon: Sun,
@@ -572,7 +587,15 @@ function ProductsPage({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
       desc: "Elevado a la altura de la cintura, para trabajar de pie y sin agacharse. Pensado para adultos mayores, personas con movilidad reducida o para quien simplemente quiere cuidar la espalda mientras cultiva.",
       price: "Consultar precio",
       includes: ["Altura de trabajo de pie", "Accesible en silla de ruedas", "Base y patas reforzadas", "Armado e instalación"],
-      img: "https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?w=600&h=380&fit=crop&auto=format",
+      img: "/bancales-varios.jpg",
+    },
+    {
+      icon: Sprout,
+      title: "Sustrato Premium",
+      desc: "Sustrato listo para cultivo: tierra de hoja, perlita, compost y fibra de coco. La mezcla que usamos en nuestros propios bancales — retiene humedad sin encharcarse y deja la raíz respirar desde el primer día.",
+      price: "Consultar precio",
+      includes: ["Tierra de hoja", "Perlita", "Compost", "Fibra de coco"],
+      img: "/sustrato.jpg",
     },
   ];
 
@@ -587,7 +610,7 @@ function ProductsPage({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
             Bancales y Cajones para tu Huerta
           </h1>
           <p className="text-primary-foreground/70 mt-4 max-w-xl text-sm">
-            Fabricados por nosotros en Villa Alemana, con madera tratada para exterior y medidas pensadas para que cultivar sea cómodo.
+            Fabricados por nosotros en Villa Alemana, con madera tratada para exterior y medidas pensadas para que cultivar sea cómodo. Y el sustrato con el que los llenamos, listo para plantar.
           </p>
         </div>
       </div>
@@ -734,14 +757,14 @@ function AboutPage({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
               <div className="flex items-start justify-between mb-3">
                 <div>
                   <h2 style={{ fontFamily: "'Playfair Display', serif" }} className="text-xl font-semibold text-foreground">Mauricio</h2>
-                  <p className="text-xs text-accent" style={{ fontFamily: "'DM Mono', monospace" }}>Ingeniero Agrónomo · Especialista en Paisajismo</p>
+                  <p className="text-xs text-accent" style={{ fontFamily: "'DM Mono', monospace" }}>Ingeniero Agrónomo · Especialista en Huertas y Hortalizas</p>
                 </div>
                 <div className="w-8 h-8 bg-secondary rounded-sm flex items-center justify-center">
                   <Leaf className="w-4 h-4 text-primary" />
                 </div>
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Más de 8 años de experiencia en proyectos de paisajismo agroecológico en la V Región. Especializado en el uso de flora nativa del litoral central y diseño de sistemas hídricos eficientes.
+                Experiencia en manejo de viveros, proyección de manejos técnicos en regiones. Especializado en el uso de técnicas agrícolas para la producción de especies vegetales con sistemas hídricos eficientes.
               </p>
             </div>
           </div>
@@ -758,14 +781,14 @@ function AboutPage({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
               <div className="flex items-start justify-between mb-3">
                 <div>
                   <h2 style={{ fontFamily: "'Playfair Display', serif" }} className="text-xl font-semibold text-foreground">Benjamín</h2>
-                  <p className="text-xs text-accent" style={{ fontFamily: "'DM Mono', monospace" }}>Ingeniero Agrónomo · Especialista en Huertas y Suelos</p>
+                  <p className="text-xs text-accent" style={{ fontFamily: "'DM Mono', monospace" }}>Ingeniero Agrónomo · Especialista en Medioambiente y Suelos</p>
                 </div>
                 <div className="w-8 h-8 bg-secondary rounded-sm flex items-center justify-center">
                   <Sprout className="w-4 h-4 text-primary" />
                 </div>
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Especialista en agroecología y manejo de suelos, con enfoque en huertas productivas, compostaje y biodiversidad funcional. Ha asesorado a más de 50 familias en la transición a jardines sostenibles.
+                Especialista en manejos ambientales, compostaje, saneamiento de suelos y biodiversidad funcional, con técnicas de manejo a gran y pequeña escala, integrando especies vegetales nativas y dinámicas entomológicas.
               </p>
             </div>
           </div>
@@ -818,7 +841,7 @@ function ContactPage() {
   const [sent, setSent] = useState(false);
   const [enviando, setEnviando] = useState(false);
   const [errorEnvio, setErrorEnvio] = useState("");
-  const servicios = ["Paisajismo y Diseño", "Huertas Agroecológicas", "Poda Especializada", "Instalación de Pasto", "Mantención Recurrente", "Asesoría Técnica"];
+  const servicios = ["Paisajismo y Diseño", "Instalaciones Agroecológicas", "Poda Especializada", "Instalación de Pasto", "Mantención Recurrente", "Asesoría Técnica"];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -935,7 +958,8 @@ function ContactPage() {
             </h2>
             <div className="space-y-4">
               {[
-                { icon: Phone, label: "+56 9 5008 1548", sub: "Mauricio (directo)" },
+                { icon: Phone, label: "+56 9 5008 1548", sub: "Benjamín (directo)" },
+                { icon: Phone, label: "+56 9 7598 2205", sub: "Mauricio (directo)" },
                 { icon: Mail, label: "contacto@boletus.cl", sub: "Respuesta en 24 hrs" },
                 { icon: MapPin, label: "Villa Alemana, V Región", sub: "Servicio toda la región" },
                 { icon: Clock, label: "Lunes a Viernes · 8:00–18:00", sub: "Sábados hasta las 13:00" },
@@ -995,7 +1019,7 @@ function Footer({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
         <div>
           <h3 className="text-white text-xs font-semibold uppercase tracking-wider mb-4">Servicios</h3>
           <ul className="space-y-2">
-            {["Paisajismo y Diseño", "Huertas Agroecológicas", "Poda Especializada", "Instalación de Pasto", "Mantención Recurrente"].map((s) => (
+            {["Paisajismo y Diseño", "Instalaciones Agroecológicas", "Poda Especializada", "Instalación de Pasto", "Mantención Recurrente"].map((s) => (
               <li key={s}>
                 <button onClick={() => onNavigate("servicios")} className="text-xs hover:text-white transition-colors">{s}</button>
               </li>
@@ -1006,6 +1030,7 @@ function Footer({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
           <h3 className="text-white text-xs font-semibold uppercase tracking-wider mb-4">Contacto</h3>
           <ul className="space-y-2 text-xs">
             <li>+56 9 5008 1548</li>
+            <li>+56 9 7598 2205</li>
             <li>contacto@boletus.cl</li>
             <li>Villa Alemana, V Región</li>
           </ul>
