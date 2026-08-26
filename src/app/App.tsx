@@ -68,7 +68,7 @@ const PORTFOLIO_ITEMS = [
   { id: 2, categoria: "paisajismo" as const, titulo: "Condominio Los Pinos — Quilpué", before: "https://images.unsplash.com/photo-1586348943529-beaae6c28db9?w=700&h=480&fit=crop&auto=format", after: "https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?w=700&h=480&fit=crop&auto=format", desc: "Diseño paisajístico de áreas comunes con plantas nativas de la V Región, senderos y luminarias." },
   // Huertas va como GALERÍA y no como antes/después: son bancales instalados y llenos,
   // no la transformación de un terreno. Un "antes" acá no dice nada.
-  { id: 3, categoria: "huertas" as const, titulo: "Huerta familiar — Concón", fotos: ["/bancales-varios.jpg", "/bancal-pequeno.jpg", "/bancal-profundo.jpg"], desc: "Bancales de distintas profundidades instalados y llenos, con sustrato preparado por nosotros y acolchado de paja para conservar la humedad." },
+  { id: 3, categoria: "huertas" as const, titulo: "Huerta familiar — Concón", fotos: ["https://images.unsplash.com/photo-1416331108676-a22ccb276e35?w=700&h=480&fit=crop&auto=format", "https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=700&h=480&fit=crop&auto=format"], desc: "Huerta agroecológica con bancales, compostaje y riego por goteo, pensada para producir todo el año en un patio de casa." },
   { id: 4, categoria: "poda" as const, titulo: "Poda de cerco perimetral de parcela", before: "https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=700&h=480&fit=crop&auto=format", after: "https://images.unsplash.com/photo-1585320806297-9794b3e4aaae?w=700&h=480&fit=crop&auto=format", desc: "Poda de mantención del cerco perimetral: se rebaja la altura, se empareja la línea y se retira el material cortado." },
 ];
 
