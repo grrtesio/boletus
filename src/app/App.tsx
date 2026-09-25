@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { aplicarSeo } from "./seo";
 import {
   Menu, X, Phone, Mail, MapPin, Clock, MessageCircle, Leaf,
   Droplets, Scissors, Star, ArrowRight, LogOut, Home, Search,
@@ -1388,6 +1389,11 @@ export default function App() {
     window.addEventListener("popstate", onPop);
     return () => window.removeEventListener("popstate", onPop);
   }, []);
+
+  // Título, descripción y canonical propios de cada sección (SEO).
+  useEffect(() => {
+    if (mode === "public") aplicarSeo(publicPage);
+  }, [mode, publicPage]);
 
   const navigatePublic = (p: PublicPage) => {
     if (p !== publicPage) {

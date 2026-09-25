@@ -1,0 +1,41 @@
+{
+  "sitio": "https://boletus.cl",
+  "rutas": {
+    "home": {
+      "ruta": "/",
+      "titulo": "Boletus — Jardinería Agroecológica y Paisajismo en Villa Alemana",
+      "descripcion": "Boletus: jardinería agroecológica y paisajismo profesional en Villa Alemana y la V Región. Instalación de pasto, huertas, poda especializada y mantención. Cotiza sin compromiso.",
+      "prioridad": "1.0"
+    },
+    "servicios": {
+      "ruta": "/servicios",
+      "titulo": "Servicios de Jardinería Profesional | Boletus",
+      "descripcion": "Instalación de pasto, paisajismo, huertas agroecológicas, poda especializada, mantención y asesoría en Villa Alemana y la Región de Valparaíso.",
+      "prioridad": "0.9"
+    },
+    "productos": {
+      "ruta": "/productos",
+      "titulo": "Bancales y Cajones para tu Huerta | Boletus",
+      "descripcion": "Bancales y cajones de cultivo para huertas en casa: cajón pequeño y tres modelos de bancal. Despacho e instalación en Villa Alemana y la V Región.",
+      "prioridad": "0.8"
+    },
+    "portafolio": {
+      "ruta": "/portafolio",
+      "titulo": "Portafolio: Transformaciones Reales | Boletus",
+      "descripcion": "Proyectos de jardinería, paisajismo, huertas y poda realizados por Boletus en Villa Alemana y la Región de Valparaíso. Antes y después.",
+      "prioridad": "0.7"
+    },
+    "nosotros": {
+      "ruta": "/nosotros",
+      "titulo": "Nosotros: dos ingenieros agrónomos | Boletus",
+      "descripcion": "Somos dos ingenieros agrónomos con una visión agroecológica de la jardinería y el paisajismo en Villa Alemana y la V Región.",
+      "prioridad": "0.6"
+    },
+    "contacto": {
+      "ruta": "/contacto",
+      "titulo": "Cotiza tu Proyecto de Jardinería | Boletus",
+      "descripcion": "Cotiza sin compromiso tu proyecto de jardinería, paisajismo o huerta en Villa Alemana y la V Región. Te respondemos por teléfono o WhatsApp.",
+      "prioridad": "0.8"
+    }
+  }
+}
