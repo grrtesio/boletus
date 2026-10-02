@@ -19,50 +19,7 @@ function pathAPagina(path: string): PublicPage {
   const entry = (Object.entries(RUTAS) as [PublicPage, string][]).find(([, ruta]) => ruta === p);
   return entry ? entry[0] : "home";
 }
-type AdminPage = "dashboard" | "pedidos" | "clientes";
-type AppMode = "public" | "admin";
-type OrderStatus = "pendiente" | "en_proceso" | "completado" | "cancelado";
 type PortfolioCategory = "todos" | "pasto" | "paisajismo" | "huertas" | "poda";
-
-interface Order {
-  id: string;
-  cliente: string;
-  servicio: string;
-  fecha: string;
-  monto: string;
-  estado: OrderStatus;
-  telefono: string;
-}
-
-interface Client {
-  id: string;
-  nombre: string;
-  email: string;
-  telefono: string;
-  comuna: string;
-  proyectos: number;
-  ultimoContacto: string;
-  tipo: "particular" | "condominio" | "empresa";
-}
-
-const ORDERS: Order[] = [
-  { id: "BOL-001", cliente: "María González", servicio: "Instalación de Pasto", fecha: "12 Jul 2026", monto: "$420.000", estado: "completado", telefono: "+56 9 8123 4567" },
-  { id: "BOL-002", cliente: "Condominio Los Pinos", servicio: "Mantención Áreas Verdes", fecha: "14 Jul 2026", monto: "$890.000", estado: "en_proceso", telefono: "+56 9 7234 5678" },
-  { id: "BOL-003", cliente: "Roberto Fuentes", servicio: "Paisajismo y Diseño", fecha: "15 Jul 2026", monto: "$1.250.000", estado: "pendiente", telefono: "+56 9 6345 6789" },
-  { id: "BOL-004", cliente: "Carolina Vidal", servicio: "Huerta Agroecológica", fecha: "10 Jul 2026", monto: "$380.000", estado: "completado", telefono: "+56 9 5456 7890" },
-  { id: "BOL-005", cliente: "Empresa Verde SpA", servicio: "Asesoría Técnica", fecha: "16 Jul 2026", monto: "$220.000", estado: "pendiente", telefono: "+56 9 4567 8901" },
-  { id: "BOL-006", cliente: "Jorge Saavedra", servicio: "Poda Especializada", fecha: "08 Jul 2026", monto: "$145.000", estado: "cancelado", telefono: "+56 9 3678 9012" },
-  { id: "BOL-007", cliente: "Comunidad El Roble", servicio: "Instalación de Pasto", fecha: "17 Jul 2026", monto: "$760.000", estado: "en_proceso", telefono: "+56 9 2789 0123" },
-];
-
-const CLIENTS: Client[] = [
-  { id: "CLI-001", nombre: "María González", email: "maria.gonzalez@gmail.com", telefono: "+56 9 8123 4567", comuna: "Villa Alemana", proyectos: 2, ultimoContacto: "12 Jul 2026", tipo: "particular" },
-  { id: "CLI-002", nombre: "Condominio Los Pinos", email: "admin@lospinos.cl", telefono: "+56 9 7234 5678", comuna: "Quilpué", proyectos: 4, ultimoContacto: "14 Jul 2026", tipo: "condominio" },
-  { id: "CLI-003", nombre: "Roberto Fuentes", email: "rfuentes@outlook.com", telefono: "+56 9 6345 6789", comuna: "Viña del Mar", proyectos: 1, ultimoContacto: "15 Jul 2026", tipo: "particular" },
-  { id: "CLI-004", nombre: "Carolina Vidal", email: "carolina.vidal@gmail.com", telefono: "+56 9 5456 7890", comuna: "Villa Alemana", proyectos: 1, ultimoContacto: "10 Jul 2026", tipo: "particular" },
-  { id: "CLI-005", nombre: "Empresa Verde SpA", email: "contacto@empresaverde.cl", telefono: "+56 9 4567 8901", comuna: "Valparaíso", proyectos: 3, ultimoContacto: "16 Jul 2026", tipo: "empresa" },
-  { id: "CLI-006", nombre: "Comunidad El Roble", email: "admin@elroble.cl", telefono: "+56 9 2789 0123", comuna: "Quilpué", proyectos: 2, ultimoContacto: "17 Jul 2026", tipo: "condominio" },
-];
 
 const PORTFOLIO_ITEMS = [
   { id: 1, categoria: "pasto" as const, titulo: "Casa particular — Recreo", before: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&h=480&fit=crop&auto=format", after: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=700&h=480&fit=crop&auto=format", desc: "Instalación de 120 m² de pasto bermuda, preparación de suelo y sistema de riego tecnificado." },
@@ -73,30 +30,7 @@ const PORTFOLIO_ITEMS = [
   { id: 4, categoria: "poda" as const, titulo: "Poda de cerco perimetral de parcela", before: "https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=700&h=480&fit=crop&auto=format", after: "https://images.unsplash.com/photo-1585320806297-9794b3e4aaae?w=700&h=480&fit=crop&auto=format", desc: "Poda de mantención del cerco perimetral: se rebaja la altura, se empareja la línea y se retira el material cortado." },
 ];
 
-const statusConfig: Record<OrderStatus, { label: string; color: string; dot: string }> = {
-  pendiente: { label: "Pendiente", color: "bg-amber-50 text-amber-700 border-amber-200", dot: "bg-amber-400" },
-  en_proceso: { label: "En proceso", color: "bg-blue-50 text-blue-700 border-blue-200", dot: "bg-blue-400" },
-  completado: { label: "Completado", color: "bg-emerald-50 text-emerald-700 border-emerald-200", dot: "bg-emerald-400" },
-  cancelado: { label: "Cancelado", color: "bg-red-50 text-red-700 border-red-200", dot: "bg-red-400" },
-};
-
-const clientTypeConfig: Record<string, string> = {
-  particular: "bg-secondary text-secondary-foreground",
-  condominio: "bg-blue-50 text-blue-700",
-  empresa: "bg-purple-50 text-purple-700",
-};
-
 // ─── Shared UI ───────────────────────────────────────────────────────────────
-
-function Badge({ status }: { status: OrderStatus }) {
-  const cfg = statusConfig[status];
-  return (
-    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border ${cfg.color}`}>
-      <span className={`w-1.5 h-1.5 rounded-full ${cfg.dot}`} />
-      {cfg.label}
-    </span>
-  );
-}
 
 function WhatsAppFloat() {
   return (
@@ -1044,339 +978,16 @@ function Footer({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
   );
 }
 
-// ─── Admin: Sidebar ───────────────────────────────────────────────────────────
-
-function AdminSidebar({
-  page,
-  onPage,
-  onExitAdmin,
-}: {
-  page: AdminPage;
-  onPage: (p: AdminPage) => void;
-  onExitAdmin: () => void;
-}) {
-  const links: { id: AdminPage; icon: React.ElementType; label: string }[] = [
-    { id: "dashboard", icon: BarChart3, label: "Dashboard" },
-    { id: "pedidos", icon: Package, label: "Pedidos" },
-    { id: "clientes", icon: Users, label: "Clientes" },
-  ];
-
-  return (
-    <aside className="w-56 bg-sidebar text-sidebar-foreground flex flex-col h-full flex-shrink-0">
-      <div className="px-5 py-5 border-b border-sidebar-border">
-        <div className="flex items-center gap-2">
-          <div className="w-7 h-7 bg-sidebar-primary rounded-sm flex items-center justify-center">
-            <Leaf className="w-3.5 h-3.5 text-sidebar-primary-foreground" />
-          </div>
-          <div>
-            <div style={{ fontFamily: "'Playfair Display', serif" }} className="text-sm font-semibold text-sidebar-foreground">BOLETUS</div>
-            <div className="text-[10px] text-sidebar-foreground/50" style={{ fontFamily: "'DM Mono', monospace" }}>Admin Panel</div>
-          </div>
-        </div>
-      </div>
-      <nav className="flex-1 py-4 px-3 space-y-1">
-        {links.map((l) => (
-          <button
-            key={l.id}
-            onClick={() => onPage(l.id)}
-            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-sm text-sm transition-colors ${
-              page === l.id
-                ? "bg-sidebar-accent text-sidebar-primary font-medium"
-                : "text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
-            }`}
-          >
-            <l.icon className="w-4 h-4" />
-            {l.label}
-          </button>
-        ))}
-      </nav>
-      <div className="px-3 py-4 border-t border-sidebar-border">
-        <button
-          onClick={onExitAdmin}
-          className="w-full flex items-center gap-3 px-3 py-2.5 text-sm text-sidebar-foreground/50 hover:text-sidebar-foreground transition-colors rounded-sm"
-        >
-          <LogOut className="w-4 h-4" />
-          Salir al sitio
-        </button>
-      </div>
-    </aside>
-  );
-}
-
-// ─── Admin: Dashboard ─────────────────────────────────────────────────────────
-
-function AdminDashboard({ onPage }: { onPage: (p: AdminPage) => void }) {
-  const stats = [
-    { label: "Pedidos este mes", value: "12", change: "+4 vs mes anterior", icon: Package, trend: "up" },
-    { label: "Clientes activos", value: "6", change: "+2 nuevos", icon: Users, trend: "up" },
-    { label: "Ingresos estimados", value: "$3.065.000", change: "+18% vs junio", icon: TrendingUp, trend: "up" },
-    { label: "Proyectos completados", value: "4", change: "este mes", icon: CheckCircle, trend: "neutral" },
-  ];
-
-  const recent = ORDERS.slice(0, 5);
-
-  return (
-    <div className="p-6 overflow-auto h-full">
-      <div className="mb-8">
-        <h1 style={{ fontFamily: "'Playfair Display', serif" }} className="text-2xl font-bold text-foreground mb-1">Dashboard</h1>
-        <p className="text-sm text-muted-foreground" style={{ fontFamily: "'DM Mono', monospace" }}>Julio 2026</p>
-      </div>
-
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        {stats.map((s) => (
-          <div key={s.label} className="bg-card border border-border p-5">
-            <div className="flex items-start justify-between mb-4">
-              <span className="text-xs text-muted-foreground">{s.label}</span>
-              <div className="w-7 h-7 bg-secondary rounded-sm flex items-center justify-center">
-                <s.icon className="w-3.5 h-3.5 text-primary" />
-              </div>
-            </div>
-            <div style={{ fontFamily: "'Playfair Display', serif" }} className="text-2xl font-bold text-foreground mb-1">{s.value}</div>
-            <div className={`text-xs ${s.trend === "up" ? "text-accent" : "text-muted-foreground"}`}>{s.change}</div>
-          </div>
-        ))}
-      </div>
-
-      <div className="bg-card border border-border">
-        <div className="px-5 py-4 border-b border-border flex items-center justify-between">
-          <h2 className="font-semibold text-foreground text-sm">Pedidos recientes</h2>
-          <button onClick={() => onPage("pedidos")} className="text-xs text-primary font-medium flex items-center gap-1 hover:gap-2 transition-all">
-            Ver todos <ArrowRight className="w-3.5 h-3.5" />
-          </button>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-border">
-                {["ID", "Cliente", "Servicio", "Fecha", "Estado"].map((h) => (
-                  <th key={h} className="text-left text-xs font-medium text-muted-foreground px-5 py-3">{h}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {recent.map((o) => (
-                <tr key={o.id} className="border-b border-border/50 hover:bg-muted/40 transition-colors">
-                  <td className="px-5 py-3 text-xs text-muted-foreground" style={{ fontFamily: "'DM Mono', monospace" }}>{o.id}</td>
-                  <td className="px-5 py-3 text-sm font-medium text-foreground">{o.cliente}</td>
-                  <td className="px-5 py-3 text-sm text-muted-foreground">{o.servicio}</td>
-                  <td className="px-5 py-3 text-xs text-muted-foreground">{o.fecha}</td>
-                  <td className="px-5 py-3"><Badge status={o.estado} /></td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ─── Admin: Orders ────────────────────────────────────────────────────────────
-
-function AdminOrders() {
-  const [orders, setOrders] = useState<Order[]>(ORDERS);
-  const [search, setSearch] = useState("");
-  const [filterStatus, setFilterStatus] = useState<OrderStatus | "todos">("todos");
-
-  const filtered = orders.filter((o) => {
-    const matchSearch = o.cliente.toLowerCase().includes(search.toLowerCase()) || o.servicio.toLowerCase().includes(search.toLowerCase());
-    const matchStatus = filterStatus === "todos" || o.estado === filterStatus;
-    return matchSearch && matchStatus;
-  });
-
-  const updateStatus = (id: string, estado: OrderStatus) => {
-    setOrders((prev) => prev.map((o) => (o.id === id ? { ...o, estado } : o)));
-  };
-
-  return (
-    <div className="p-6 overflow-auto h-full">
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <h1 style={{ fontFamily: "'Playfair Display', serif" }} className="text-2xl font-bold text-foreground mb-1">Pedidos</h1>
-          <p className="text-xs text-muted-foreground">{filtered.length} pedidos encontrados</p>
-        </div>
-        <button className="flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 text-xs font-medium rounded-sm hover:bg-primary/90 transition-colors">
-          <Plus className="w-3.5 h-3.5" />
-          Nuevo pedido
-        </button>
-      </div>
-
-      <div className="flex gap-3 mb-5 flex-wrap">
-        <div className="relative flex-1 min-w-48">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
-          <input
-            type="text"
-            placeholder="Buscar cliente o servicio..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-input-background border border-border pl-9 pr-4 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary rounded-sm"
-          />
-        </div>
-        <select
-          value={filterStatus}
-          onChange={(e) => setFilterStatus(e.target.value as OrderStatus | "todos")}
-          className="bg-input-background border border-border px-3 py-2 text-sm text-foreground focus:outline-none focus:border-primary rounded-sm"
-        >
-          <option value="todos">Todos los estados</option>
-          <option value="pendiente">Pendiente</option>
-          <option value="en_proceso">En proceso</option>
-          <option value="completado">Completado</option>
-          <option value="cancelado">Cancelado</option>
-        </select>
-      </div>
-
-      <div className="bg-card border border-border overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-border bg-muted/30">
-                {["ID", "Cliente", "Servicio", "Fecha", "Monto", "Estado", "Acciones"].map((h) => (
-                  <th key={h} className="text-left text-xs font-medium text-muted-foreground px-4 py-3 whitespace-nowrap">{h}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {filtered.map((o) => (
-                <tr key={o.id} className="border-b border-border/50 hover:bg-muted/30 transition-colors">
-                  <td className="px-4 py-3 text-xs text-muted-foreground whitespace-nowrap" style={{ fontFamily: "'DM Mono', monospace" }}>{o.id}</td>
-                  <td className="px-4 py-3">
-                    <div className="text-sm font-medium text-foreground">{o.cliente}</div>
-                    <div className="text-xs text-muted-foreground">{o.telefono}</div>
-                  </td>
-                  <td className="px-4 py-3 text-sm text-muted-foreground whitespace-nowrap">{o.servicio}</td>
-                  <td className="px-4 py-3 text-xs text-muted-foreground whitespace-nowrap">{o.fecha}</td>
-                  <td className="px-4 py-3 text-sm font-medium text-foreground whitespace-nowrap" style={{ fontFamily: "'DM Mono', monospace" }}>{o.monto}</td>
-                  <td className="px-4 py-3">
-                    <select
-                      value={o.estado}
-                      onChange={(e) => updateStatus(o.id, e.target.value as OrderStatus)}
-                      className={`text-xs font-medium px-2 py-1 border rounded-full focus:outline-none ${statusConfig[o.estado].color}`}
-                    >
-                      <option value="pendiente">Pendiente</option>
-                      <option value="en_proceso">En proceso</option>
-                      <option value="completado">Completado</option>
-                      <option value="cancelado">Cancelado</option>
-                    </select>
-                  </td>
-                  <td className="px-4 py-3">
-                    <div className="flex items-center gap-2">
-                      <button className="w-7 h-7 flex items-center justify-center border border-border rounded-sm hover:border-primary hover:text-primary transition-colors text-muted-foreground">
-                        <Eye className="w-3.5 h-3.5" />
-                      </button>
-                      <button className="w-7 h-7 flex items-center justify-center border border-border rounded-sm hover:border-primary hover:text-primary transition-colors text-muted-foreground">
-                        <Edit2 className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        {filtered.length === 0 && (
-          <div className="text-center py-12 text-muted-foreground text-sm">No se encontraron pedidos.</div>
-        )}
-      </div>
-    </div>
-  );
-}
-
-// ─── Admin: Clients ───────────────────────────────────────────────────────────
-
-function AdminClients() {
-  const [search, setSearch] = useState("");
-  const filtered = CLIENTS.filter(
-    (c) =>
-      c.nombre.toLowerCase().includes(search.toLowerCase()) ||
-      c.email.toLowerCase().includes(search.toLowerCase()) ||
-      c.comuna.toLowerCase().includes(search.toLowerCase())
-  );
-
-  return (
-    <div className="p-6 overflow-auto h-full">
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <h1 style={{ fontFamily: "'Playfair Display', serif" }} className="text-2xl font-bold text-foreground mb-1">Clientes</h1>
-          <p className="text-xs text-muted-foreground">{filtered.length} clientes registrados</p>
-        </div>
-        <button className="flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 text-xs font-medium rounded-sm hover:bg-primary/90 transition-colors">
-          <Plus className="w-3.5 h-3.5" />
-          Nuevo cliente
-        </button>
-      </div>
-
-      <div className="relative mb-5 max-w-xs">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
-        <input
-          type="text"
-          placeholder="Buscar cliente..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="w-full bg-input-background border border-border pl-9 pr-4 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary rounded-sm"
-        />
-      </div>
-
-      <div className="grid gap-3">
-        {filtered.map((c) => (
-          <div key={c.id} className="bg-card border border-border p-5 flex flex-col sm:flex-row sm:items-center gap-4 hover:border-primary/30 transition-colors">
-            <div className="w-10 h-10 bg-secondary rounded-sm flex items-center justify-center flex-shrink-0 font-semibold text-primary text-sm">
-              {c.nombre.split(" ").map((n) => n[0]).slice(0, 2).join("")}
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-0.5">
-                <span className="font-semibold text-foreground text-sm">{c.nombre}</span>
-                <span className={`text-xs px-2 py-0.5 rounded-full ${clientTypeConfig[c.tipo]}`}>
-                  {c.tipo}
-                </span>
-              </div>
-              <div className="flex flex-wrap gap-x-4 gap-y-0.5 text-xs text-muted-foreground">
-                <span>{c.email}</span>
-                <span>{c.telefono}</span>
-                <span>{c.comuna}</span>
-              </div>
-            </div>
-            <div className="flex items-center gap-6 flex-shrink-0">
-              <div className="text-center">
-                <div style={{ fontFamily: "'DM Mono', monospace" }} className="text-lg font-bold text-foreground">{c.proyectos}</div>
-                <div className="text-xs text-muted-foreground">proyectos</div>
-              </div>
-              <div className="text-right">
-                <div className="text-xs text-muted-foreground">Último contacto</div>
-                <div className="text-xs font-medium text-foreground">{c.ultimoContacto}</div>
-              </div>
-              <div className="flex gap-1.5">
-                <button className="w-7 h-7 flex items-center justify-center border border-border rounded-sm hover:border-primary hover:text-primary transition-colors text-muted-foreground">
-                  <Eye className="w-3.5 h-3.5" />
-                </button>
-                <button className="w-7 h-7 flex items-center justify-center border border-border rounded-sm hover:border-primary hover:text-primary transition-colors text-muted-foreground">
-                  <Edit2 className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 // ─── Root App ─────────────────────────────────────────────────────────────────
 
 export default function App() {
-  // Arranca en el SITIO PÚBLICO (comercial). Hasta que el admin tenga ruta y
-  // login propios, se entra sin UI visible usando `?admin=1` en la URL. El
-  // botón "Admin" del footer se quitó para que no lo vea cualquier visitante.
-  const [mode, setMode] = useState<AppMode>(() => {
-    if (typeof window === "undefined") return "public";
-    return new URLSearchParams(window.location.search).get("admin") === "1" ? "admin" : "public";
-  });
+  // El panel de administración es otra página (/admin, con login): ver admin/index.html.
   // La página inicial sale del pathname: /servicios → servicios, / → home, etc.
   // Así, links directos y refresh en cualquier ruta abren la sección correcta.
   const [publicPage, setPublicPage] = useState<PublicPage>(() => {
     if (typeof window === "undefined") return "home";
     return pathAPagina(window.location.pathname);
   });
-  const [adminPage, setAdminPage] = useState<AdminPage>("dashboard");
 
   // Sincroniza el back/forward del navegador con el estado de la SPA. Sin esto,
   // el usuario entra a "servicios", aprieta atrás, y salía del sitio (o queda
@@ -1392,8 +1003,8 @@ export default function App() {
 
   // Título, descripción y canonical propios de cada sección (SEO).
   useEffect(() => {
-    if (mode === "public") aplicarSeo(publicPage);
-  }, [mode, publicPage]);
+    aplicarSeo(publicPage);
+  }, [publicPage]);
 
   const navigatePublic = (p: PublicPage) => {
     if (p !== publicPage) {
@@ -1402,23 +1013,6 @@ export default function App() {
     setPublicPage(p);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
-
-  if (mode === "admin") {
-    return (
-      <div className="flex h-screen bg-background overflow-hidden">
-        <AdminSidebar
-          page={adminPage}
-          onPage={setAdminPage}
-          onExitAdmin={() => setMode("public")}
-        />
-        <main className="flex-1 overflow-auto">
-          {adminPage === "dashboard" && <AdminDashboard onPage={setAdminPage} />}
-          {adminPage === "pedidos" && <AdminOrders />}
-          {adminPage === "clientes" && <AdminClients />}
-        </main>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-background" style={{ fontFamily: "'DM Sans', sans-serif" }}>

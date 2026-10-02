@@ -2,17 +2,43 @@
  * Función serverless (Vercel): recibe el formulario de contacto de boletus.cl y
  * envía la consulta por correo a contacto@boletus.cl vía Resend. El remitente es
  * Mondo Tesio (dominio ya verificado en Resend); el destino y remitente se pueden
- * override por env. No toca ninguna base de datos.
+ * override por env.
+ *
+ * Además (2-oct-2026) la guarda como cotización NUEVA en la base del panel
+ * (/admin → Cotizaciones). Las dos cosas son independientes: si la base no
+ * contesta, el correo sale igual, y si el correo falla, la consulta ya quedó
+ * guardada. Nunca se pierde una consulta por culpa de la otra.
  *
  * POST /api/contacto  { nombre, telefono, servicio, mensaje }
  *
  * Env requerida: RESEND_API_KEY (la API key re_... de Resend).
+ * Env del panel: SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY (sin ellas solo se manda el correo).
  * Env opcional:  CONTACTO_TO (default contacto@boletus.cl),
  *                CONTACTO_FROM (default "Boletus (Mondo Tesio) <no-reply@mondotesio.com>").
  */
 const RESEND_KEY = process.env.RESEND_API_KEY || '';
 const TO = process.env.CONTACTO_TO || 'contacto@boletus.cl';
 const FROM = process.env.CONTACTO_FROM || 'Boletus (Mondo Tesio) <no-reply@mondotesio.com>';
+
+const SUPA_URL = (process.env.SUPABASE_URL || '').replace(/\/$/, '');
+const SUPA_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
+
+/** Guarda la consulta como cotización nueva. No lanza: devuelve si quedó guardada. */
+async function guardarCotizacion(c: { nombre: string; telefono: string; servicio: string; mensaje: string }): Promise<boolean> {
+  if (!SUPA_URL || !SUPA_KEY) return false;
+  try {
+    const r = await fetch(`${SUPA_URL}/rest/v1/cotizaciones`, {
+      method: 'POST',
+      headers: { apikey: SUPA_KEY, Authorization: `Bearer ${SUPA_KEY}`, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+      body: JSON.stringify({ origen: 'web', estado: 'nueva', nombre: c.nombre, telefono: c.telefono, servicio: c.servicio || null, mensaje: c.mensaje || null }),
+    });
+    if (!r.ok) console.error('[contacto] no se guardó la cotización:', r.status, (await r.text().catch(() => '')).slice(0, 200));
+    return r.ok;
+  } catch (e) {
+    console.error('[contacto] no se guardó la cotización:', e instanceof Error ? e.message : e);
+    return false;
+  }
+}
 
 const esc = (s: unknown): string =>
   String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -23,11 +49,6 @@ export default async function handler(req: any, res: any): Promise<void> {
     res.status(405).json({ ok: false, error: 'metodo_no_permitido' });
     return;
   }
-  if (!RESEND_KEY) {
-    res.status(503).json({ ok: false, error: 'email_no_configurado' });
-    return;
-  }
-
   const b = typeof req.body === 'string' ? (() => { try { return JSON.parse(req.body || '{}'); } catch { return {}; } })() : (req.body || {});
   const nombre = String(b.nombre || '').trim();
   const telefono = String(b.telefono || '').trim();
@@ -36,6 +57,13 @@ export default async function handler(req: any, res: any): Promise<void> {
 
   if (!nombre || !telefono) {
     res.status(400).json({ ok: false, error: 'faltan_datos' });
+    return;
+  }
+
+  // Primero se guarda: es lo que alimenta el panel, y no depende de que salga el correo.
+  const guardada = await guardarCotizacion({ nombre, telefono, servicio, mensaje });
+  if (!RESEND_KEY) {
+    res.status(guardada ? 200 : 503).json({ ok: guardada, guardada, error: 'email_no_configurado' });
     return;
   }
 
@@ -58,10 +86,11 @@ export default async function handler(req: any, res: any): Promise<void> {
     });
     if (!r.ok) {
       const detalle = (await r.text().catch(() => '')).slice(0, 200);
-      res.status(502).json({ ok: false, error: 'resend_fallo', detalle });
+      // Si quedó guardada, la consulta no se perdió: se ve en el panel.
+      res.status(guardada ? 200 : 502).json({ ok: guardada, guardada, error: 'resend_fallo', detalle });
       return;
     }
-    res.status(200).json({ ok: true });
+    res.status(200).json({ ok: true, guardada });
   } catch (e) {
     res.status(500).json({ ok: false, error: e instanceof Error ? e.message : 'error' });
   }
