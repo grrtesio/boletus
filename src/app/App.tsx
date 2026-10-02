@@ -712,6 +712,8 @@ function AboutPage({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
                     src={p.foto}
                     alt={[p.nombre, p.cargo].filter(Boolean).join(" — ")}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    // Retratos: el recuadro es ancho y bajo, y centrado cortaba la cabeza.
+                    style={{ objectPosition: "50% 35%" }}
                   />}
                 </div>
                 <div className="p-6">
