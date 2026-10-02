@@ -1,30 +1,33 @@
 import { useEffect, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
-import { BarChart3, ClipboardList, Users, CalendarDays, Images, LogOut } from "lucide-react";
+import { BarChart3, ClipboardList, Users, CalendarDays, Images, LogOut, UserRound } from "lucide-react";
 import { configurado, supabase } from "./supabase";
 import { Ingreso } from "./Ingreso";
 import { Dashboard } from "./Dashboard";
 import { Cotizaciones } from "./Cotizaciones";
+import { Portafolio } from "./Portafolio";
+import { Equipo } from "./Equipo";
 
 /*
  * PANEL DE ADMINISTRACIÓN DE BOLETUS (/admin).
  *
- * Etapa 1 (2-oct-2026): acceso, cotizaciones y dashboard. Clientes, mantenciones
- * y portafolio vienen en las etapas siguientes; se muestran en el menú como
+ * Etapa 1 (2-oct-2026): acceso, cotizaciones y dashboard; portafolio y «Quiénes
+ * somos» editables. Clientes y mantenciones vienen en las etapas siguientes; se muestran en el menú como
  * «pronto» para que se vea hacia dónde va.
  *
  * Acceso: código por correo, y la sesión además tiene que ser de un correo de la
  * tabla `admins` (es_admin()). Si no lo es, se cierra y se avisa.
  */
 
-export type Seccion = "dashboard" | "cotizaciones" | "clientes" | "mantenciones" | "portafolio";
+export type Seccion = "dashboard" | "cotizaciones" | "portafolio" | "nosotros" | "clientes" | "mantenciones";
 
 const MENU: { id: Seccion; label: string; icono: React.ElementType; pronto?: boolean }[] = [
   { id: "dashboard", label: "Resumen", icono: BarChart3 },
   { id: "cotizaciones", label: "Cotizaciones", icono: ClipboardList },
+  { id: "portafolio", label: "Portafolio", icono: Images },
+  { id: "nosotros", label: "Quiénes somos", icono: UserRound },
   { id: "clientes", label: "Clientes", icono: Users, pronto: true },
   { id: "mantenciones", label: "Mantenciones", icono: CalendarDays, pronto: true },
-  { id: "portafolio", label: "Portafolio", icono: Images, pronto: true },
 ];
 
 export function AdminApp() {
@@ -94,6 +97,8 @@ export function AdminApp() {
       <main className="flex-1 p-4 md:p-8 max-w-6xl">
         {seccion === "dashboard" && <Dashboard ir={setSeccion} />}
         {seccion === "cotizaciones" && <Cotizaciones />}
+        {seccion === "portafolio" && <Portafolio />}
+        {seccion === "nosotros" && <Equipo />}
         <button onClick={() => supabase.auth.signOut()} className="md:hidden mt-8 text-sm text-stone-500 underline">Salir</button>
       </main>
     </div>
