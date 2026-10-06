@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { aplicarSeo } from "./seo";
+import { usePortafolio, useEquipo, useAjuste, type ItemPortafolio, type Persona } from "./contenido";
 import {
   Menu, X, Phone, Mail, MapPin, Clock, MessageCircle, Leaf,
   Droplets, Scissors, Star, ArrowRight, LogOut, Home, Search,
@@ -21,13 +22,16 @@ function pathAPagina(path: string): PublicPage {
 }
 type PortfolioCategory = "todos" | "pasto" | "paisajismo" | "huertas" | "poda";
 
-const PORTFOLIO_ITEMS = [
-  { id: 1, categoria: "pasto" as const, titulo: "Casa particular — Recreo", before: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&h=480&fit=crop&auto=format", after: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=700&h=480&fit=crop&auto=format", desc: "Instalación de 120 m² de pasto bermuda, preparación de suelo y sistema de riego tecnificado." },
-  { id: 2, categoria: "paisajismo" as const, titulo: "Condominio Los Pinos — Quilpué", before: "https://images.unsplash.com/photo-1586348943529-beaae6c28db9?w=700&h=480&fit=crop&auto=format", after: "https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?w=700&h=480&fit=crop&auto=format", desc: "Diseño paisajístico de áreas comunes con plantas nativas de la V Región, senderos y luminarias." },
+/* Respaldo: lo que se muestra si la base no contesta. El contenido real se edita en /admin. */
+const PORTFOLIO_ITEMS: ItemPortafolio[] = [
+  // Fotos reales en public/portafolio/ (6-oct-2026).
+  { id: 1, categoria: "pasto", titulo: "Casa particular — Recreo", fotos: ["/portafolio/pasto-antes.jpg", "/portafolio/pasto-3.jpg", "/portafolio/pasto-despues.jpg"], desc: "Instalación de 10 m² de pasto con preparación de suelo incluido." },
+  { id: 2, categoria: "poda", titulo: "Casa particular — Quilpué", fotos: ["/portafolio/poda-esp.jpg"], desc: "Poda especializada de saneamiento en cerco vivo." },
   // Huertas va como GALERÍA y no como antes/después: son bancales instalados y llenos,
   // no la transformación de un terreno. Un "antes" acá no dice nada.
-  { id: 3, categoria: "huertas" as const, titulo: "Huerta familiar — Concón", fotos: ["https://images.unsplash.com/photo-1416331108676-a22ccb276e35?w=700&h=480&fit=crop&auto=format", "https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=700&h=480&fit=crop&auto=format"], desc: "Huerta agroecológica con bancales, compostaje y riego por goteo, pensada para producir todo el año en un patio de casa." },
-  { id: 4, categoria: "poda" as const, titulo: "Poda de cerco perimetral de parcela", before: "https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=700&h=480&fit=crop&auto=format", after: "https://images.unsplash.com/photo-1585320806297-9794b3e4aaae?w=700&h=480&fit=crop&auto=format", desc: "Poda de mantención del cerco perimetral: se rebaja la altura, se empareja la línea y se retira el material cortado." },
+  { id: 3, categoria: "huertas", titulo: "Huerta familiar — Concón", fotos: ["/portafolio/bancal-pequeno.jpg", "/portafolio/bancales-varios.jpg", "/portafolio/bancal-escalonado.jpg"], desc: "Huerta agroecológica con bancales y compostaje, pensada para producir todo el año en un patio de casa." },
+  { id: 4, categoria: "poda", titulo: "Poda de cerco perimetral de parcela — Peñablanca", fotos: ["/portafolio/poda-1.jpg", "/portafolio/poda-2.jpg"], desc: "Poda de mantención del cerco perimetral: se rebaja la altura, se empareja la línea y se retira el material cortado." },
+  { id: 5, categoria: "huertas", titulo: "Huerta familiar — Peñablanca", fotos: ["/portafolio/bancal-profundo.jpg"], desc: "Huerta agroecológica con bancales profundos, compostaje y riego por goteo, pensada para producir todo el año en una parcela." },
 ];
 
 // ─── Shared UI ───────────────────────────────────────────────────────────────
@@ -134,6 +138,7 @@ function Navbar({
 // ─── Home Page ─────────────────────────────────────────────────────────────────
 
 function HomePage({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
+  const portafolio = usePortafolio(PORTFOLIO_ITEMS);
   // Los tres de la portada tienen que existir en la página de Servicios y
   // llamarse igual: antes acá aparecía «Riego Tecnificado», que no es un
   // servicio del sitio, y «Paisajismo Agroecológico», que allá se llama
@@ -158,7 +163,7 @@ function HomePage({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
         <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent" />
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 w-full">
           <p className="text-accent text-sm font-medium tracking-[0.2em] uppercase mb-4" style={{ fontFamily: "'DM Mono', monospace" }}>
-            Villa Alemana · V Región · Chile
+            Villa Alemana · Región de Valparaíso · Chile
           </p>
           <h1
             style={{ fontFamily: "'Playfair Display', serif" }}
@@ -167,7 +172,7 @@ function HomePage({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
             Jardinería Agroecológica Profesional
           </h1>
           <p className="text-white/80 text-lg max-w-xl mb-8 leading-relaxed">
-            Ingenieros agrónomos especializados en paisajismo, instalación de pasto y huertas agroecológicas en la V Región.
+            Ingenieros agrónomos especializados en paisajismo, instalación de pasto y huertas agroecológicas en la Región de Valparaíso.
           </p>
           <div className="flex flex-col sm:flex-row gap-3">
             <a
@@ -262,9 +267,12 @@ function HomePage({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
             </button>
           </div>
           <div className="grid sm:grid-cols-2 gap-6">
-            {PORTFOLIO_ITEMS.slice(0, 2).map((item) => (
-              <BeforeAfterCard key={item.id} item={item} />
-            ))}
+            {(() => {
+              // Los marcados «en la portada» en /admin; si no hay, los dos primeros.
+              if (!portafolio) return [0, 1].map((n) => <div key={n} className="h-72 border border-border bg-muted animate-pulse" />);
+              const marcados = portafolio.filter((p) => p.enInicio);
+              return (marcados.length ? marcados : portafolio).slice(0, 2).map((item) => <BeforeAfterCard key={item.id} item={item} />);
+            })()}
           </div>
         </div>
       </section>
@@ -327,9 +335,9 @@ function HomePage({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
  *  · GALERÍA (`fotos`) cuando el trabajo es una instalación: bancales puestos y llenos.
  *    Un "antes" de un patio vacío no dice nada, y forzarlo obliga a inventar una foto.
  */
-function BeforeAfterCard({ item }: { item: typeof PORTFOLIO_ITEMS[number] }) {
+function BeforeAfterCard({ item }: { item: ItemPortafolio }) {
   const [showAfter, setShowAfter] = useState(false);
-  const fotos = "fotos" in item ? (item.fotos as string[]) : null;
+  const fotos = item.fotos ?? null;
   const [i, setI] = useState(0);
 
   return (
@@ -384,7 +392,7 @@ function ServicesPage({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
     {
       icon: Leaf,
       title: "Paisajismo y Diseño",
-      desc: "Diseñamos espacios verdes con metodología agroecológica comprobada. Priorizamos plantas nativas del litoral central que toleran la sequía y aportan biodiversidad local.",
+      desc: "Diseñamos espacios verdes en Villa Alemana, Quilpué y Valparaíso con metodología agroecológica comprobada. Priorizamos plantas nativas del litoral central que toleran la sequía y aportan biodiversidad local.",
       price: "Presupuesto según proyecto",
       includes: ["Diseño en plano 2D", "Selección de especies", "Instalación y trasplante"],
       img: "https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?w=600&h=380&fit=crop&auto=format",
@@ -408,7 +416,7 @@ function ServicesPage({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
     {
       icon: Sprout,
       title: "Instalación de Pasto",
-      desc: "Preparamos y nivelamos el suelo, seleccionamos la variedad de césped más adecuada para tu microclima e instalamos sistemas de riego para garantizar un resultado duradero.",
+      desc: "Preparamos y nivelamos el suelo, seleccionamos la variedad de césped más adecuada para tu microclima e instalamos sistemas de riego para garantizar un resultado duradero en casas y parcelas de Villa Alemana, Quilpué y Valparaíso.",
       price: "Desde $35.000/m²",
       includes: ["Análisis de suelo", "Nivelación y preparación", "Siembra o tapizado", "Sistema de riego básico"],
       img: "/instalacion-pasto.jpg",
@@ -416,7 +424,7 @@ function ServicesPage({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
     {
       icon: Droplets,
       title: "Mantención Recurrente",
-      desc: "Planes mensuales o quincenales. Incluye corte de pasto, control de malezas, riego y revisión general de la salud del jardín.",
+      desc: "Planes mensuales o quincenales para jardines de Villa Alemana, Quilpué y alrededores. Incluye corte de pasto, control de malezas, riego y revisión general de la salud del jardín.",
       price: "Planes desde $80.000/mes",
       includes: ["Corte y bordes de pasto", "Control de malezas", "Revisión de riego"],
       img: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&h=380&fit=crop&auto=format",
@@ -441,6 +449,9 @@ function ServicesPage({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
           <h1 style={{ fontFamily: "'Playfair Display', serif" }} className="text-3xl md:text-5xl font-bold text-primary-foreground max-w-xl leading-tight">
             Servicios de Jardinería Profesional
           </h1>
+          <p className="text-primary-foreground/70 mt-4 max-w-xl text-sm">
+            Como ingenieros agrónomos, ofrecemos servicios de jardinería profesional adaptados a cada etapa de tu proyecto.
+          </p>
         </div>
       </div>
 
@@ -545,7 +556,7 @@ function ProductsPage({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
             Bancales y Cajones para tu Huerta
           </h1>
           <p className="text-primary-foreground/70 mt-4 max-w-xl text-sm">
-            Fabricados por nosotros en Villa Alemana, con madera tratada para exterior y medidas pensadas para que cultivar sea cómodo. Y el sustrato con el que los llenamos, listo para plantar.
+            Fabricados por nosotros en Villa Alemana, con madera tratada para exterior y medidas pensadas para que cultivar sea cómodo. Y el sustrato con el que los llenamos, listo para plantar. Si buscas una cama de cultivo, un huerto urbano o un bancal elevado para tu patio o terraza, estos son nuestros modelos, con despacho a Quilpué, Valparaíso y el resto de la región.
           </p>
         </div>
       </div>
@@ -600,7 +611,9 @@ function PortfolioPage() {
     { id: "huertas", label: "Huertas" },
     { id: "poda", label: "Poda" },
   ];
-  const filtered = cat === "todos" ? PORTFOLIO_ITEMS : PORTFOLIO_ITEMS.filter((p) => p.categoria === cat);
+  const portafolio = usePortafolio(PORTFOLIO_ITEMS);
+  const todos = portafolio ?? [];
+  const filtered = cat === "todos" ? todos : todos.filter((p) => p.categoria === cat);
 
   return (
     <div className="pt-16">
@@ -641,7 +654,10 @@ function PortfolioPage() {
           ))}
         </div>
 
-        {filtered.length === 0 && (
+        {!portafolio && (
+          <div className="grid sm:grid-cols-2 gap-6">{[0, 1].map((n) => <div key={n} className="h-72 border border-border bg-muted animate-pulse" />)}</div>
+        )}
+        {portafolio && filtered.length === 0 && (
           <div className="text-center py-20 text-muted-foreground text-sm">
             No hay proyectos en esta categoría aún.
           </div>
@@ -653,9 +669,20 @@ function PortfolioPage() {
 
 // ─── About Page ───────────────────────────────────────────────────────────────
 
+/* Respaldo de «Quiénes somos» si la base no contesta. Se edita en /admin. */
+const EQUIPO_RESPALDO: Persona[] = [
+  { id: "mauricio", nombre: "Mauricio Espinoza", cargo: "Ingeniero Agrónomo · Especialista en Huertas y Hortalizas", foto: "https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?w=600&h=400&fit=crop&auto=format",
+    bio: "Experiencia en manejo de viveros, proyección de manejos técnicos en regiones. Especializado en el uso de técnicas agrícolas para la producción de especies vegetales con sistemas hídricos eficientes." },
+  { id: "benjamin", nombre: "Benjamín Reyes", cargo: "Ingeniero Agrónomo · Especialista en Medioambiente y Suelos", foto: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&h=400&fit=crop&auto=format",
+    bio: "Especialista en manejos ambientales, compostaje, saneamiento de suelos y biodiversidad funcional, con técnicas de manejo a gran y pequeña escala, integrando especies vegetales nativas y dinámicas entomológicas." },
+];
+const CABECERA_RESPALDO = "https://images.unsplash.com/photo-1560493676-04071c5f467b?w=1400&h=700&fit=crop&auto=format";
+
 function AboutPage({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
+  const equipo = useEquipo(EQUIPO_RESPALDO);
+  const cabecera = useAjuste("nosotros_cabecera", CABECERA_RESPALDO);
   const values = [
-    { icon: Leaf, title: "Plantas nativas", desc: "Preferimos especies locales del litoral central porque resisten mejor el clima de la V Región y consumen menos agua." },
+    { icon: Leaf, title: "Plantas nativas", desc: "Preferimos especies locales del litoral central porque resisten mejor el clima de la Región de Valparaíso y consumen menos agua." },
     { icon: Droplets, title: "Riego eficiente", desc: "Diseñamos sistemas de riego tecnificado que reducen el consumo hídrico hasta en un 60% respecto al riego manual." },
     { icon: ShieldCheck, title: "Sin agroquímicos", desc: "Aplicamos agroecología real: control biológico, compostaje y biodiversidad funcional en lugar de pesticidas." },
   ];
@@ -663,11 +690,11 @@ function AboutPage({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
   return (
     <div className="pt-16">
       <div className="bg-foreground py-24 px-4 sm:px-6 relative overflow-hidden">
-        <img
-          src="https://images.unsplash.com/photo-1560493676-04071c5f467b?w=1400&h=700&fit=crop&auto=format"
+        {cabecera && <img
+          src={cabecera}
           alt="Equipo Boletus en terreno"
           className="absolute inset-0 w-full h-full object-cover opacity-25"
-        />
+        />}
         <div className="relative max-w-6xl mx-auto">
           <p className="text-accent text-xs font-medium tracking-[0.2em] uppercase mb-4" style={{ fontFamily: "'DM Mono', monospace" }}>
             Nuestro equipo
@@ -680,53 +707,35 @@ function AboutPage({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-16">
         <div className="grid md:grid-cols-2 gap-12 mb-16">
-          <div className="border border-border bg-card overflow-hidden group">
-            <div className="h-64 bg-muted overflow-hidden">
-              <img
-                src="https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?w=600&h=400&fit=crop&auto=format"
-                alt="Mauricio — Ingeniero Agrónomo"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              />
-            </div>
-            <div className="p-6">
-              <div className="flex items-start justify-between mb-3">
-                <div>
-                  <h2 style={{ fontFamily: "'Playfair Display', serif" }} className="text-xl font-semibold text-foreground">Mauricio</h2>
-                  <p className="text-xs text-accent" style={{ fontFamily: "'DM Mono', monospace" }}>Ingeniero Agrónomo · Especialista en Huertas y Hortalizas</p>
+          {!equipo && [0, 1].map((n) => <div key={n} className="h-96 border border-border bg-muted animate-pulse" />)}
+          {(equipo ?? []).map((p, n) => {
+            const Icono = n % 2 === 0 ? Leaf : Sprout;
+            return (
+              <div key={p.id} className="border border-border bg-card overflow-hidden group">
+                <div className="h-64 bg-muted overflow-hidden">
+                  {p.foto && <img
+                    src={p.foto}
+                    alt={[p.nombre, p.cargo].filter(Boolean).join(" — ")}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    // Retratos: el recuadro es ancho y bajo, y centrado cortaba la cabeza.
+                    style={{ objectPosition: "50% 35%" }}
+                  />}
                 </div>
-                <div className="w-8 h-8 bg-secondary rounded-sm flex items-center justify-center">
-                  <Leaf className="w-4 h-4 text-primary" />
-                </div>
-              </div>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                Experiencia en manejo de viveros, proyección de manejos técnicos en regiones. Especializado en el uso de técnicas agrícolas para la producción de especies vegetales con sistemas hídricos eficientes.
-              </p>
-            </div>
-          </div>
-
-          <div className="border border-border bg-card overflow-hidden group">
-            <div className="h-64 bg-muted overflow-hidden">
-              <img
-                src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&h=400&fit=crop&auto=format"
-                alt="Benjamín — Ingeniero Agrónomo"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              />
-            </div>
-            <div className="p-6">
-              <div className="flex items-start justify-between mb-3">
-                <div>
-                  <h2 style={{ fontFamily: "'Playfair Display', serif" }} className="text-xl font-semibold text-foreground">Benjamín</h2>
-                  <p className="text-xs text-accent" style={{ fontFamily: "'DM Mono', monospace" }}>Ingeniero Agrónomo · Especialista en Medioambiente y Suelos</p>
-                </div>
-                <div className="w-8 h-8 bg-secondary rounded-sm flex items-center justify-center">
-                  <Sprout className="w-4 h-4 text-primary" />
+                <div className="p-6">
+                  <div className="flex items-start justify-between mb-3">
+                    <div>
+                      <h2 style={{ fontFamily: "'Playfair Display', serif" }} className="text-xl font-semibold text-foreground">{p.nombre}</h2>
+                      {p.cargo && <p className="text-xs text-accent" style={{ fontFamily: "'DM Mono', monospace" }}>{p.cargo}</p>}
+                    </div>
+                    <div className="w-8 h-8 bg-secondary rounded-sm flex items-center justify-center">
+                      <Icono className="w-4 h-4 text-primary" />
+                    </div>
+                  </div>
+                  {p.bio && <p className="text-sm text-muted-foreground leading-relaxed">{p.bio}</p>}
                 </div>
               </div>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                Especialista en manejos ambientales, compostaje, saneamiento de suelos y biodiversidad funcional, con técnicas de manejo a gran y pequeña escala, integrando especies vegetales nativas y dinámicas entomológicas.
-              </p>
-            </div>
-          </div>
+            );
+          })}
         </div>
 
         <div className="bg-secondary/40 p-8 md:p-12 mb-12">
@@ -738,7 +747,7 @@ function AboutPage({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
               Creemos que un jardín bien diseñado no debería requerir grandes cantidades de agua, pesticidas o mantención constante. La agroecología nos enseña a trabajar con la naturaleza, no en su contra.
             </p>
             <p>
-              Por eso elegimos plantas nativas: conocemos el clima de la V Región. Esas plantas llevan miles de años adaptadas a nuestras condiciones de sequía estival y lluvia invernal. Simplemente funcionan mejor.
+              Trabajamos en terreno en Villa Alemana, Quilpué y el resto de la Región de Valparaíso, y conocemos su clima. Por eso elegimos plantas nativas: llevan miles de años adaptadas a nuestras condiciones de sequía estival y lluvia invernal. Simplemente funcionan mejor.
             </p>
             <p>
               Nuestro objetivo no es hacer jardines bonitos por temporada. Queremos diseñar espacios verdes que mejoren con el tiempo, que sean más resistentes cada año y que sus dueños puedan disfrutar sin preocupaciones.
@@ -896,7 +905,7 @@ function ContactPage() {
                 { icon: Phone, label: "+56 9 5008 1548", sub: "Benjamín (directo)" },
                 { icon: Phone, label: "+56 9 7598 2205", sub: "Mauricio (directo)" },
                 { icon: Mail, label: "contacto@boletus.cl", sub: "Respuesta en 24 hrs" },
-                { icon: MapPin, label: "Villa Alemana, V Región", sub: "Servicio toda la región" },
+                { icon: MapPin, label: "Villa Alemana, Región de Valparaíso", sub: "Servicio toda la región" },
                 { icon: Clock, label: "Lunes a Viernes · 8:00–18:00", sub: "Sábados hasta las 13:00" },
               ].map((c) => (
                 <div key={c.label} className="flex items-start gap-3">
@@ -925,11 +934,16 @@ function ContactPage() {
             </a>
           </div>
 
-          <div className="h-40 bg-muted rounded-sm overflow-hidden border border-border flex items-center justify-center text-muted-foreground text-xs">
-            <div className="text-center">
-              <MapPin className="w-6 h-6 mx-auto mb-1 text-muted-foreground/60" />
-              <span>Google Maps — Villa Alemana, V Región</span>
-            </div>
+          {/* Mapa embebido de Google sin clave de API: la URL pública con output=embed basta para un punto. */}
+          <div className="h-56 bg-muted rounded-sm overflow-hidden border border-border">
+            <iframe
+              title="Mapa de Villa Alemana, Región de Valparaíso"
+              src="https://www.google.com/maps?q=Villa+Alemana,+Regi%C3%B3n+de+Valpara%C3%ADso,+Chile&z=12&output=embed"
+              className="w-full h-full border-0"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+            />
           </div>
         </div>
       </div>
@@ -948,7 +962,7 @@ function Footer({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
             <img src="/logo-boletus-dark.svg" alt="Boletus" className="h-12 w-auto" />
           </div>
           <p className="text-xs leading-relaxed">
-            Jardinería agroecológica profesional en Villa Alemana y V Región. Ingenieros agrónomos comprometidos con el paisajismo sostenible.
+            Jardinería agroecológica profesional en Villa Alemana y Región de Valparaíso. Ingenieros agrónomos comprometidos con el paisajismo sostenible.
           </p>
         </div>
         <div>
@@ -967,7 +981,7 @@ function Footer({ onNavigate }: { onNavigate: (p: PublicPage) => void }) {
             <li>+56 9 5008 1548</li>
             <li>+56 9 7598 2205</li>
             <li>contacto@boletus.cl</li>
-            <li>Villa Alemana, V Región</li>
+            <li>Villa Alemana, Región de Valparaíso</li>
           </ul>
         </div>
       </div>

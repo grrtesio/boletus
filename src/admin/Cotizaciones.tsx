@@ -4,11 +4,15 @@ import {
   ESTADOS, ORIGENES, SERVICIOS, supabase, fechaCorta, pesos, waLink,
   type Cotizacion, type EstadoCotizacion, type OrigenCotizacion,
 } from "./supabase";
+import { Documentos } from "./Documentos";
 
 /*
  * COTIZACIONES. Entran solas desde el formulario de /contacto (origen «web») y
  * se cargan a mano las que llegan por WhatsApp o llamada. Cada una tiene un
  * estado: Nueva → Cotizada → Aceptada / Rechazada / Sin respuesta.
+ *
+ * Desde la ficha de una cotización ya guardada se genera el PDF de cotización y
+ * se guardan documentos (ver Documentos.tsx).
  */
 
 export function EstadoChip({ estado }: { estado: EstadoCotizacion }) {
@@ -112,12 +116,12 @@ export function Cotizaciones() {
         </div>
       )}
 
-      {editando && <FichaCotizacion inicial={editando} onCerrar={() => setEditando(null)} onGuardada={() => { setEditando(null); void cargar(); }} />}
+      {editando && <FichaCotizacion inicial={editando} onCerrar={() => setEditando(null)} onGuardada={() => { setEditando(null); void cargar(); }} onEstadoCambiado={() => void cargar()} />}
     </div>
   );
 }
 
-function FichaCotizacion({ inicial, onCerrar, onGuardada }: { inicial: Borrador; onCerrar: () => void; onGuardada: () => void }) {
+function FichaCotizacion({ inicial, onCerrar, onGuardada, onEstadoCambiado }: { inicial: Borrador; onCerrar: () => void; onGuardada: () => void; onEstadoCambiado?: () => void }) {
   const [f, setF] = useState<Borrador>(inicial);
   const [guardando, setGuardando] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -186,6 +190,9 @@ function FichaCotizacion({ inicial, onCerrar, onGuardada }: { inicial: Borrador;
           <button type="button" onClick={onCerrar} className="rounded-lg px-4 py-2 text-sm text-stone-600">Cancelar</button>
           {!nueva && <button type="button" onClick={borrar} className="ml-auto text-sm text-rose-700">Borrar</button>}
         </div>
+        {!nueva && (
+          <Documentos cotizacion={{ ...(inicial as Cotizacion), ...f, id: f.id! } as Cotizacion} onEstado={(estado) => { set("estado", estado); onEstadoCambiado?.(); }} />
+        )}
       </form>
     </div>
   );
