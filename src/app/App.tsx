@@ -24,17 +24,14 @@ type PortfolioCategory = "todos" | "pasto" | "paisajismo" | "huertas" | "poda";
 
 /* Respaldo: lo que se muestra si la base no contesta. El contenido real se edita en /admin. */
 const PORTFOLIO_ITEMS: ItemPortafolio[] = [
-  // PENDIENTE: las fotos «pasto antes», «pasto después» y «pasto3» todavía no llegan; mientras, quedan las de banco.
-  { id: 1, categoria: "pasto", titulo: "Casa particular — Recreo", before: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&h=480&fit=crop&auto=format", after: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=700&h=480&fit=crop&auto=format", desc: "Instalación de 10 m² de pasto con preparación de suelo incluido." },
-  // PENDIENTE: foto «poda esp».
-  { id: 2, categoria: "poda", titulo: "Casa particular — Quilpué", fotos: ["https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?w=700&h=480&fit=crop&auto=format"], desc: "Poda especializada de saneamiento en cerco vivo." },
+  // Fotos reales en public/portafolio/ (6-oct-2026). PENDIENTES: «pasto antes» (iría primera en Recreo) y «poda 1» (primera en Peñablanca).
+  { id: 1, categoria: "pasto", titulo: "Casa particular — Recreo", fotos: ["/portafolio/pasto-3.jpg", "/portafolio/pasto-despues.jpg"], desc: "Instalación de 10 m² de pasto con preparación de suelo incluido." },
+  { id: 2, categoria: "poda", titulo: "Casa particular — Quilpué", fotos: ["/portafolio/poda-esp.jpg"], desc: "Poda especializada de saneamiento en cerco vivo." },
   // Huertas va como GALERÍA y no como antes/después: son bancales instalados y llenos,
   // no la transformación de un terreno. Un "antes" acá no dice nada.
-  // PENDIENTE: tercera foto «bancal escalonado».
-  { id: 3, categoria: "huertas", titulo: "Huerta familiar — Concón", fotos: ["https://boletus.cl/bancal-pequeno.jpg", "https://boletus.cl/bancales-varios.jpg"], desc: "Huerta agroecológica con bancales y compostaje, pensada para producir todo el año en un patio de casa." },
-  // PENDIENTE: fotos «poda 1» y «poda 2».
-  { id: 4, categoria: "poda", titulo: "Poda de cerco perimetral de parcela — Peñablanca", fotos: ["https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=700&h=480&fit=crop&auto=format", "https://images.unsplash.com/photo-1585320806297-9794b3e4aaae?w=700&h=480&fit=crop&auto=format"], desc: "Poda de mantención del cerco perimetral: se rebaja la altura, se empareja la línea y se retira el material cortado." },
-  { id: 5, categoria: "huertas", titulo: "Huerta familiar — Peñablanca", fotos: ["https://boletus.cl/bancal-profundo.jpg"], desc: "Huerta agroecológica con bancales profundos, compostaje y riego por goteo, pensada para producir todo el año en una parcela." },
+  { id: 3, categoria: "huertas", titulo: "Huerta familiar — Concón", fotos: ["/portafolio/bancal-pequeno.jpg", "/portafolio/bancales-varios.jpg", "/portafolio/bancal-escalonado.jpg"], desc: "Huerta agroecológica con bancales y compostaje, pensada para producir todo el año en un patio de casa." },
+  { id: 4, categoria: "poda", titulo: "Poda de cerco perimetral de parcela — Peñablanca", fotos: ["/portafolio/poda-2.jpg"], desc: "Poda de mantención del cerco perimetral: se rebaja la altura, se empareja la línea y se retira el material cortado." },
+  { id: 5, categoria: "huertas", titulo: "Huerta familiar — Peñablanca", fotos: ["/portafolio/bancal-profundo.jpg"], desc: "Huerta agroecológica con bancales profundos, compostaje y riego por goteo, pensada para producir todo el año en una parcela." },
 ];
 
 // ─── Shared UI ───────────────────────────────────────────────────────────────
