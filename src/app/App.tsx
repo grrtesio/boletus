@@ -24,13 +24,13 @@ type PortfolioCategory = "todos" | "pasto" | "paisajismo" | "huertas" | "poda";
 
 /* Respaldo: lo que se muestra si la base no contesta. El contenido real se edita en /admin. */
 const PORTFOLIO_ITEMS: ItemPortafolio[] = [
-  // Fotos reales en public/portafolio/ (6-oct-2026). PENDIENTES: «pasto antes» (iría primera en Recreo) y «poda 1» (primera en Peñablanca).
-  { id: 1, categoria: "pasto", titulo: "Casa particular — Recreo", fotos: ["/portafolio/pasto-3.jpg", "/portafolio/pasto-despues.jpg"], desc: "Instalación de 10 m² de pasto con preparación de suelo incluido." },
+  // Fotos reales en public/portafolio/ (6-oct-2026).
+  { id: 1, categoria: "pasto", titulo: "Casa particular — Recreo", fotos: ["/portafolio/pasto-antes.jpg", "/portafolio/pasto-3.jpg", "/portafolio/pasto-despues.jpg"], desc: "Instalación de 10 m² de pasto con preparación de suelo incluido." },
   { id: 2, categoria: "poda", titulo: "Casa particular — Quilpué", fotos: ["/portafolio/poda-esp.jpg"], desc: "Poda especializada de saneamiento en cerco vivo." },
   // Huertas va como GALERÍA y no como antes/después: son bancales instalados y llenos,
   // no la transformación de un terreno. Un "antes" acá no dice nada.
   { id: 3, categoria: "huertas", titulo: "Huerta familiar — Concón", fotos: ["/portafolio/bancal-pequeno.jpg", "/portafolio/bancales-varios.jpg", "/portafolio/bancal-escalonado.jpg"], desc: "Huerta agroecológica con bancales y compostaje, pensada para producir todo el año en un patio de casa." },
-  { id: 4, categoria: "poda", titulo: "Poda de cerco perimetral de parcela — Peñablanca", fotos: ["/portafolio/poda-2.jpg"], desc: "Poda de mantención del cerco perimetral: se rebaja la altura, se empareja la línea y se retira el material cortado." },
+  { id: 4, categoria: "poda", titulo: "Poda de cerco perimetral de parcela — Peñablanca", fotos: ["/portafolio/poda-1.jpg", "/portafolio/poda-2.jpg"], desc: "Poda de mantención del cerco perimetral: se rebaja la altura, se empareja la línea y se retira el material cortado." },
   { id: 5, categoria: "huertas", titulo: "Huerta familiar — Peñablanca", fotos: ["/portafolio/bancal-profundo.jpg"], desc: "Huerta agroecológica con bancales profundos, compostaje y riego por goteo, pensada para producir todo el año en una parcela." },
 ];
 
