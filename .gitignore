@@ -11,3 +11,5 @@ dist
 # versiones distintas de las mismas dependencias.
 package-lock.json
 yarn.lock
+
+supabase/.temp/
